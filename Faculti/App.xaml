@@ -1,0 +1,143 @@
+﻿<Application x:Class="Faculti.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="/UI/Windows/LoginWindow.xaml">
+    <Application.Resources>
+        <FontFamily x:Key="Montserrat">pack://application:,,,/Resources/Fonts/Montserrat/#Montserrat</FontFamily>
+        <FontFamily x:Key="OpenSans">pack://application:,,,/Resources/Fonts/Open_Sans_Condensed/#OpenSansCondensed</FontFamily>
+        <Brush x:Key="White">#FFFFFF</Brush>
+        <Brush x:Key="FacultiBlue">#19C0FF</Brush>
+        <Brush x:Key="FacultiBlueHover">#00B9FF</Brush>
+        <Brush x:Key="FacultiBluePressed">#17abe3</Brush>
+        <Color x:Key="FacultiBlueColor">#17abe3</Color>
+        <Brush x:Key="BlueDark">#231F20</Brush>
+        <Brush x:Key="BlueMedium">#404040</Brush>
+        <Brush x:Key="BlueFaint">#404959</Brush>
+        <Brush x:Key="RedIdle">#FF2525</Brush>
+        <Brush x:Key="RedPressed">#C91A1A</Brush>
+        <Brush x:Key="BlueGray">#313F4F</Brush>
+        <Brush x:Key="GrayDark">#999999</Brush>
+        <Brush x:Key="GrayRegular">#C4C8CD</Brush>
+        <Brush x:Key="GrayMedium">#e6e6e6</Brush>
+        <Brush x:Key="GrayFaint">#EDEDED</Brush>
+        <Brush x:Key="ErrorFaint">#ffe6e6</Brush>
+        <Brush x:Key="ErrorMedium">#fab9d0</Brush>
+        <Brush x:Key="ErrorMediumHover">#fcdcdc</Brush>
+        <Brush x:Key="ErrorRegular">#ff4576</Brush>
+
+        <Style x:Key="BaseRadioButton" TargetType="{x:Type RadioButton}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{StaticResource GrayFaint}"/>
+            <Setter Property="Foreground" Value="{StaticResource GrayDark}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,4"/>
+            <Setter Property="BorderBrush" Value="{StaticResource GrayFaint}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Border CornerRadius="6" Padding="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GrayMedium}"/>
+                                <Setter Property="Background" Value="{StaticResource GrayMedium}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource BlueMedium}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BaseCheckbox" TargetType="{x:Type ToggleButton}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{StaticResource GrayFaint}"/>
+            <Setter Property="Foreground" Value="Transparent"/>
+            <Setter Property="Content" Value="✔️"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>                   
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border CornerRadius="6" BorderThickness="0" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource GrayMedium}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="{StaticResource FacultiBlue}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LoginButton" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource GrayRegular}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource GrayRegular}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Content" Value="➧"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Padding="0,0,0,4" SnapsToDevicePixels="True" CornerRadius="20" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Background" Value="{StaticResource FacultiBlue}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseCaptured" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Background" Value="{StaticResource FacultiBluePressed}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BaseTextHover" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="{StaticResource GrayRegular}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Padding="0,0,0,0" BorderThickness="0" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource BlueMedium}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseCaptured" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource BlueDark}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>
