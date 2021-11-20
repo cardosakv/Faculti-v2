@@ -13,47 +13,8 @@ namespace Faculti.Helpers
     internal class Password
     {
         #region Secret
-
         private const string _securityKey = "992fbd43528da0e45687230ff8acd9ed8ade0125";
-
         #endregion Secret
-
-        /// <summary>
-        ///     Checks if input password is correct matching the email in the AirtableRecord array.
-        /// </summary>
-        ///
-        /// <param name="email">
-        ///     Email address of the user.
-        /// </param>
-        ///
-        /// <param name="passwordInHash">
-        ///     Password of the email to check.
-        /// </param>
-        ///
-        /// <returns>
-        ///     Boolean value if password matched that in the database or not.
-        /// </returns>
-        public static bool IsCorrect(string userType, string email, string passwordInHash)
-        {
-            DatabaseClient client = new DatabaseClient();
-            var cmdText = $"select * from {userType} where email = '{email}' and password_in_hash = '{passwordInHash}'";
-
-            try
-            {
-                OracleCommand cmd = new OracleCommand(cmdText, client.Conn);
-                if (cmd.ExecuteScalar() != null)
-                {
-                    return true;
-                }
-                client.Conn.Close();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error in Password.IsCorrect()");
-            }
-            
-            return false;
-        }
 
         /// <summary>
         ///    Converts the encrypted/unreadable password back to plain text.
