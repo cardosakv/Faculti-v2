@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Faculti.DataRepository.DatabaseManager
+namespace Faculti.DataRepo.DatabaseManager
 {
     public class DatabaseWorker
     {

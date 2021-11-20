@@ -1,10 +1,8 @@
-﻿using Faculti.DataRepository;
-using Faculti.DataRepository.DatabaseManager;
-using Oracle.ManagedDataAccess.Client;
+﻿using Oracle.ManagedDataAccess.Client;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace Faculti.Services
+namespace Faculti.DataRepo.DatabaseManager.Providers
 {
     public class OracleDatabase : Database
     {
@@ -22,6 +20,14 @@ namespace Faculti.Services
         {
             OracleConnection connection = (OracleConnection)CreateConnection();
             connection.Open();
+
+            return connection;
+        }
+
+        public override async Task<IDbConnection> CreateOpenConnectionAsync()
+        {
+            OracleConnection connection = (OracleConnection)CreateConnection();
+            await Task.Run(() => connection.Open());
 
             return connection;
         }

@@ -1,227 +1,271 @@
-﻿//using Faculti.Helpers;
-//using Faculti.Services.FacultiDB;
-//using Oracle.ManagedDataAccess.Client;
-//using System;
-//using System.Drawing;
-//using System.IO;
-//using System.Threading.Tasks;
-//using System.Windows.Forms;
+﻿using Faculti.DataRepo.DatabaseManager;
+using Faculti.Helpers;
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows;
 
-//namespace Faculti.DataClasses
-//{
-//    /// <summary>
-//    ///     General and parent class for all user types.
-//    /// </summary>
-//    public class User
-//    {
-//        // Private fields
-//        private int _id;
-//        private string _type;
-//        private string _email;
-//        private string _passwordInHash;
-//        private string _firstName;
-//        private string _lastName;
-//        private string _phoneNumberInHash;
-//        private string _sectionName;
-//        private string _isVerified;
-//        private string _hasRequested;
-//        private string _isActive;
-//        private Image _picture;
-//        private DateTime _lastOnline;
+namespace Faculti.DataClasses
+{
+    public class User : DatabaseWorker, INotifyPropertyChanged
+    {
+        public User() { }
 
+        public User(UserType type, string? email, string? phoneNumberInHash, string passwordInHash)
+        {
+            _type = type;
+            _email = email;
+            _phoneNumberInHash = phoneNumberInHash;
+            _passwordInHash = passwordInHash;
+        }
 
-//        // Default constructor - without parameters
-//        public User() { }
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
-//        // Constructor with parameters
-//        public User(string type, string email, string passwordInHash)
-//        {
-//            _type = type;
-//            _email = email;
-//            _passwordInHash = passwordInHash;
+        private UserType _type;
+        public UserType Type
+        {
+            get { return _type; }
+            set { _type = value; }
+        }
 
-//        }
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set 
+            { 
+                _email = value; 
+                OnPropertyChanged("Email"); 
+            }
+        }
 
-//        // Properties
-//        public string Email
-//        {
-//            get { return _email; }
-//            set { _email = value; }
-//        }
+        private string _passwordInHash;
+        public string PasswordInHash
+        {
+            get { return _passwordInHash; }
+            set 
+            { 
+                _passwordInHash = value; 
+                OnPropertyChanged("PasswordInHash"); 
+            }
+        }
 
-//        public string PasswordInHash
-//        {
-//            get { return _passwordInHash; }
-//            set { _passwordInHash = value; }
-//        }
+        private string _firstName;
+        public string FirstName
+        {
+            get { return _firstName; }
+            set 
+            { 
+                _firstName = value; 
+                OnPropertyChanged("FirstName"); 
+            }
+        }
 
-//        public string FirstName
-//        {
-//            get { return _firstName; }
-//            set { _firstName = value; }
-//        }
+        private string _lastName;
+        public string LastName
+        {
+            get { return _lastName; }
+            set 
+            { 
+                _lastName = value; 
+                OnPropertyChanged("LastName"); 
+            }
+        }
 
-//        public string LastName
-//        {
-//            get { return _lastName; }
-//            set { _lastName = value; }
-//        }
-//        public string PhoneNumberInHash
-//        {
-//            get { return _phoneNumberInHash; }
-//            set { _phoneNumberInHash = value; }
-//        }
+        public string FullName
+        {
+            get { return $"{_firstName} {_lastName}"; }
+        }
 
-//        public int Id
-//        {
-//            get { return _id; }
-//            set { _id = value; }
-//        }
+        private string _phoneNumberInHash;
+        public string PhoneNumberInHash
+        {
+            get { return _phoneNumberInHash; }
+            set 
+            { 
+                _phoneNumberInHash = value; 
+                OnPropertyChanged("PhoneNumberInHash"); 
+            }
+        }
 
-//        public string Type
-//        {
-//            get { return _type; }
-//            set { _type = value; }
-//        }
+        private Image _picture;
+        public Image Picture
+        {
+            get { return _picture; }
+            set 
+            { 
+                _picture = value; 
+                OnPropertyChanged("Picture"); 
+            }
+        }
 
-//        public string SectionName
-//        {
-//            get { return _sectionName; }
-//            set { _sectionName = value; }
-//        }
+        private DateTime _lastOnline;
+        public DateTime LastOnline
+        {
+            get { return _lastOnline; }
+            set 
+            { 
+                _lastOnline = value;
+                OnPropertyChanged("LastOnline");
+            }
+        }
 
-//        public string IsVerified
-//        {
-//            get { return _isVerified; }
-//            set { _isVerified = value; }
-//        }
+        private Status _status;
+        public Status Status
+        {
+            get { return _status; }
+            set
+            {
+                _status = value;
+                SetStatusAsync(value);
+                OnPropertyChanged("Status");
+            }
+        }
 
-//        public string IsActive
-//        {
-//            get { return _isActive; }
-//            set { _isActive = value; }
-//        }
+        private DateTime _lastPicChange;
+        public DateTime LastPicChange
+        {
+            get { return _lastPicChange; }
+            set { _lastPicChange = value; }
+        }
 
-//        public string HasRequested
-//        {
-//            get { return _hasRequested; }
-//            set { _hasRequested = value; }
-//        }
+        private IDbConnection _dbConnection;
+        public IDbConnection DbConnection
+        {
+            get { return _dbConnection; }
+            set 
+            {
+                _dbConnection.Close();
+                _dbConnection = value; 
+            }
+        }
 
-//        public Image Picture
-//        {
-//            get { return _picture; }
-//            set { _picture = value; }
-//        }
+        /// <summary>
+        /// Opens only one database connection for the user.
+        /// </summary>
+        public async Task CreateConnection()
+        {
+            if (_dbConnection != null) _dbConnection.Close();
+            
+            _dbConnection = await Database.CreateOpenConnectionAsync();
+        }
 
-//        public DateTime LastOnline
-//        {
-//            get { return _lastOnline; }
-//            set { _lastOnline = value; }
-//        }
+        /// <summary>
+        /// Adds the user to the database.
+        /// </summary>
+        public async void AddToDatabaseAsync()
+        {
+            try
+            {
+                var cmdText = $@"INSERT INTO USERS (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_IN_HASH, PHONE_NUMBER_IN_HASH) values ('{FirstName}', '{LastName}', '{Email}', '{PasswordInHash}', '{PhoneNumberInHash}')";
+                using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+                await Task.Run(() => command.ExecuteNonQuery());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding user to the database.\n" + ex);
+            }
+        }
 
-//        /// <summary>
-//        ///     Adds a user to the database;
-//        /// </summary>
-//        /// 
-//        /// <param name="signupUser">
-//        ///     The signup user User class object.
-//        /// </param>
-//        public void AddToDatabase()
-//        {
-//            // Add user to the database
-//            DatabaseClient client = new DatabaseClient();
-//            string cmdText = $@"insert into {_type} (first_name, last_name, email, password_in_hash, phone_number_in_hash) values ('{_firstName}', '{_lastName}', '{_email}', '{_passwordInHash}', '{_phoneNumberInHash}')";
-//            client.PerformNonQueryCommand(cmdText);
-//        }
+        /// <summary>
+        /// Checks if the user exists in the database.
+        /// </summary> 
+        public async Task<bool> HaveCredentialsMatchedAsync()
+        {
+            string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
+            string toCheckValue = PhoneNumberInHash ?? Email;
 
-//        /// <summary>
-//        ///     Checks if the user exists in the database.
-//        /// </summary> 
-//        public bool HaveCredentialsMatched()
-//        {
-//            return Password.IsCorrect(Type, Email, PasswordInHash);
-//        }
+            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD = '{PasswordInHash}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection); 
 
-//        public void GetGeneralInfo()
-//        {
-//            DatabaseClient client = new DatabaseClient();
-//            var cmdText = $"select {Type.Remove(Type.Length - 1, 1)}_id, first_name, last_name, phone_number_in_hash, section_name, picture, active_status, is_verified, has_requested, last_online from {Type} where email = '{Email}'";
-//            OracleCommand cmd = new OracleCommand(cmdText, client.Conn);
-//            using (OracleDataReader rdr = cmd.ExecuteReader())
-//            {
-//                rdr.Read();
+            var records = await Task.Run(() => command.ExecuteNonQuery());
+            if (records > 0) // there is a record
+            {
+                return true;
+            }
 
-//                if (rdr.HasRows)
-//                {
-//                    Id = rdr.GetInt32(0);
-//                    FirstName = rdr.GetString(1);
-//                    LastName = rdr.GetString(2);
-//                    PhoneNumberInHash = rdr.GetString(3);
-//                    SectionName = rdr.IsDBNull(4) ? null : rdr.GetString(4);
-//                    byte[] image = rdr.IsDBNull(5) ? null : (byte[])rdr["picture"];
-//                    IsActive = rdr.IsDBNull(6) ? null : rdr.GetString(6);
-//                    IsVerified = rdr.IsDBNull(7) ? null : rdr.GetString(7);
-//                    HasRequested = rdr.IsDBNull(8) ? null : rdr.GetString(8);
-//                    LastOnline = rdr.IsDBNull(9) ? DateTime.MinValue : rdr.GetOracleDate(9).Value;
+            return false;
+        }
 
-//                    if (image != null)
-//                    {
-//                        MemoryStream ms = new MemoryStream(image);
-//                        Picture = Image.FromStream(ms);
-//                    }
-//                    else
-//                    {
-//                        Picture = Properties.Resources.default_profile;
-//                    }
-//                }
-//            }
-                
+        /// <summary>
+        /// Gets all information of the user from the database given the credentials.
+        /// </summary>
+        public async void RetrieveGeneralInfoAsync()
+        {
+            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
 
-//            client.Conn.Close();
-//        }
+            await Task.Run(() => ReadData(cmdText, DbConnection));
+        }
 
-//        public bool IsFirstTime()
-//        {
-//            DatabaseClient client = new DatabaseClient();
-//            var cmdText = $"select section_name from {Type} where email = '{Email}'";
-//            OracleCommand cmd = new OracleCommand(cmdText, client.Conn);
-//            using (OracleDataReader rdr = cmd.ExecuteReader())
-//            {
-//                rdr.Read();
+        /// <summary>
+        /// Gets all information of the user from the database using the Id.
+        /// </summary>
+        public async void RetrieveGeneralInfoAsync(int userId, IDbConnection connection)
+        {
+            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE USER_ID = {userId}";
 
-//                if (rdr.IsDBNull(0)) return true;
-//            }
+            await Task.Run(() => ReadData(cmdText, connection));
+        }
 
+        /// <summary>
+        /// Sets the activity status of the user.
+        /// </summary>
+        private async void SetStatusAsync(Status status)
+        {
+            var cmdText = $"UPDATE USERS SET STATUS = '{status}' WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+            await Task.Run(() => command.ExecuteNonQuery());
+        }
 
-//            return false;
-//        }
+        #region Reading database data
+        private void ReadData(string cmdText, IDbConnection connection)
+        {
+            using IDbCommand command = Database.CreateCommand(cmdText, connection);
+            using OracleDataReader reader = (OracleDataReader)command.ExecuteReader();
 
-//        public void SetStatus(string status)
-//        {
-//            _isActive = status;
+            if (reader.Read())
+            {
+                Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                Type = reader.IsDBNull(1) ? UserType.Parent : (UserType)Enum.Parse(typeof(UserType), reader.GetString(1));
+                FirstName = reader.IsDBNull(2) ? null : reader.GetString(2);
+                LastName = reader.IsDBNull(3) ? null : reader.GetString(3);
+                PhoneNumberInHash = reader.IsDBNull(4) ? null : reader.GetString(4);
+                Email = reader.IsDBNull(5) ? null : reader.GetString(5);
+                PasswordInHash = reader.IsDBNull(6) ? null : reader.GetString(6);
+                Status = reader.IsDBNull(7) ? Status.Invisible : (Status)Enum.Parse(typeof(Status), reader.GetString(7));
+                LastPicChange = reader.IsDBNull(9) ? DateTime.MinValue : reader.GetOracleDate(9).Value;
+                LastOnline = reader.IsDBNull(10) ? DateTime.MinValue : reader.GetOracleDate(10).Value;
 
-//            DatabaseClient client = new DatabaseClient();
-//            var cmdText = $"update {Type} set active_status = '{status}' where email = '{Email}'";
-//            client.PerformNonQueryCommand(cmdText);
-//        }
+                byte[] image = reader.IsDBNull(8) ? null : (byte[])reader["PICTURE"];
+                if (image == null)
+                {
+                    Picture = Properties.Resources.default_profile;
+                }
+                else
+                {
+                    MemoryStream ms = new(image);
+                    Picture = Image.FromStream(ms);
+                }
+            }
+        }
+        #endregion
 
+        #region PropertyChanged
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-
-//        public T As<T>()
-//        {
-//            var type = typeof(T);
-//            var instance = Activator.CreateInstance(type);
-
-//            if (type.BaseType != null)
-//            {
-//                var properties = type.BaseType.GetProperties();
-//                foreach (var property in properties)
-//                    if (property.CanWrite)
-//                        property.SetValue(instance, property.GetValue(this, null), null);
-//            }
-
-//            return (T)instance;
-//        }
-//    }
-//}
+        private void OnPropertyChanged(string propertyname)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
+        }
+        #endregion
+    }
+}

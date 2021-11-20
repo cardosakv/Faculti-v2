@@ -21,7 +21,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Data;
-using Faculti.DataRepository.DatabaseManager;
 using Faculti.DataClasses;
 
 namespace Faculti.UI.Windows
@@ -29,50 +28,9 @@ namespace Faculti.UI.Windows
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : INotifyPropertyChanged
+    public partial class LoginWindow : Window
     {
-        #region PropertyChanged
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged(string propertyname)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
-        }
-        #endregion
-
-        private string _email = string.Empty;
-        private string _password = string.Empty;
         private bool _isKeepSignedIn;
-
-        public LoginWindow()
-        {
-            InitializeComponent();
-            DataContext = this;
-        }
-
-        public string Email
-        {
-            get { return _email; }
-            set
-            {
-                _email = value;
-                OnPropertyChanged("Email");
-                TextBoxEmail.IsError = !Syntax.IsValidEmail(value);
-            }
-        }
-
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                _password = value;
-                OnPropertyChanged("Password");
-            }
-        }
-
-
-
 
         #region UI
 
@@ -129,16 +87,27 @@ namespace Faculti.UI.Windows
         }
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            HomeWindow home = new HomeWindow();
-            this.Close();
-            home.Show();
+            Parent p = new();
+            await p.CreateConnection();
+            p.FirstName = "Khyle";
+            p.RetrieveOwnedStudentInfo();
+
+            Post a = new();
+            a.Author = p;
+            MessageBox.Show(a.Author.FirstName);
+
+            //Student a = new();
+            //a.FirstName = "Vincent";
+            //a.GetParentInfo();
+
+            //MessageBox.Show(a.Parent.OwnedStudent.FirstName);
         }
 
         private void TextBlockCreateAccount_Click(object sender, RoutedEventArgs e)
         {
-            RegisterWindow register = new RegisterWindow();
+            RegisterWindow register = new();
             this.Close();
             register.Show();
         }

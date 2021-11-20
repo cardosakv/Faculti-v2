@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Faculti.DataRepository.DatabaseManager
+namespace Faculti.DataRepo.DatabaseManager
 {
     public sealed class DatabaseFactory
     {
@@ -17,7 +17,7 @@ namespace Faculti.DataRepository.DatabaseManager
 
         public static Database CreateDatabase()
         {
-            // Verify a DatabaseFactoryConfiguration line exists in the web.config.
+            // Verify a DatabaseFactoryConfiguration line exists in the App.config
             if (_sectionHandler.Name.Length == 0)
             {
                 throw new Exception("Database name not defined in DatabaseFactoryConfiguration section of App.config.");

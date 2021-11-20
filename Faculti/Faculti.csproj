@@ -81,7 +81,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="DataClasses\Class.cs" />
+    <Compile Include="DataClasses\Comment.cs" />
+    <Compile Include="DataClasses\Events.cs" />
+    <Compile Include="DataClasses\Inbox.cs" />
+    <Compile Include="DataClasses\Messages.cs" />
+    <Compile Include="DataClasses\Parent.cs" />
+    <Compile Include="DataClasses\Post.cs" />
+    <Compile Include="DataClasses\Student.cs" />
+    <Compile Include="DataClasses\Teacher.cs" />
+    <Compile Include="DataClasses\User.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Syntax.cs" />
+    <Compile Include="Helpers\Time.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -89,12 +101,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.13" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
+    <PackageReference Include="NLog" Version="4.7.12" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.4" />
   </ItemGroup>
 
@@ -209,7 +218,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataClasses\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
