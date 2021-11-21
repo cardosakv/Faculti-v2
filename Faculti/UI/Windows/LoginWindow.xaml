@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         Height="650" 
         Width="650"
-        MouseDown="WindowLogin_MouseDown">
+        MouseDown="WindowLogin_MouseDown" Loaded="WindowLogin_Loaded">
 
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="0" CaptionHeight="0"/>
@@ -92,10 +92,10 @@
 
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0">
                 <CheckBox x:Name="CheckboxKeepSignedIn" Style="{StaticResource BaseCheckbox}" FontSize="9" Height="19" Width="19" Margin="2,0,0,0" Click="CheckboxKeepSignedIn_Click"/>
-                <TextBlock Text="Stay signed in" FontFamily="{StaticResource Montserrat}" VerticalAlignment="Center" Margin="8,0,0,0" FontWeight="SemiBold" Foreground="{StaticResource GrayDark}" FontSize="11" MouseDown="TextBlock_MouseDown"/>
+                <TextBlock Text="Stay signed in" FontFamily="{StaticResource Montserrat}" VerticalAlignment="Center" Margin="8,0,0,0" FontWeight="SemiBold" Foreground="{StaticResource GrayDark}" FontSize="11" MouseDown="TextBlockKepSignedIn_MouseDown"/>
             </StackPanel>
 
-            <Button Style="{StaticResource LoginButton}" IsEnabled="{Binding HasNoErrors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Sign In" Margin="0,20,0,0" Width="60" Height="60" Click="Button_Click"/>
+            <Button x:Name="ButtonLogin" Style="{StaticResource LoginButton}" IsEnabled="{Binding HasNoErrors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Sign In" Margin="0,20,0,0" Width="60" Height="60" Click="ButtonLogin_Click"/>
             <Button x:Name="TextBlockCreateAccount" Style="{StaticResource BaseTextHover}" Content="CREATE ACCOUNT" HorizontalContentAlignment="Center" FontFamily="{DynamicResource OpenSans}" FontWeight="Bold" Margin="0,35,0,0" FontSize="11" Width="100" Click="TextBlockCreateAccount_Click"/>
             <Button x:Name="TextBlockForgotPassword" Style="{StaticResource BaseTextHover}" Content="FORGOT PASSWORD?" HorizontalContentAlignment="Center" FontFamily="{DynamicResource OpenSans}" FontWeight="Bold" Margin="0,7,0,0" FontSize="11" Width="115"/>
         </StackPanel>

@@ -30,10 +30,23 @@ namespace Faculti.UI.Windows
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private User loginUser;
         private bool _isKeepSignedIn;
 
-        #region UI
+        private void ButtonLogin_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
 
+        private void WindowLogin_Loaded(object sender, RoutedEventArgs e)
+        {
+            loginUser = new();
+            DataContext = loginUser;
+        }
+
+
+
+        #region UI code behind
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -51,45 +64,19 @@ namespace Faculti.UI.Windows
 
         private void Toolbar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
         }
 
-        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        private void TextBlockKepSignedIn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (_isKeepSignedIn)
-            {
-                CheckboxKeepSignedIn.IsChecked = false;
-                _isKeepSignedIn = false;
-            }
-            else
-            {
-                CheckboxKeepSignedIn.IsChecked = true;
-                _isKeepSignedIn = true;
-            }
-
-            CheckboxKeepSignedIn.Focus();
+            _isKeepSignedIn = !_isKeepSignedIn;
+            CheckboxKeepSignedIn.IsChecked = _isKeepSignedIn;
         }
 
         private void CheckboxKeepSignedIn_Click(object sender, RoutedEventArgs e)
         {
-            if (_isKeepSignedIn)
-            {
-                CheckboxKeepSignedIn.IsChecked = false;
-                _isKeepSignedIn = false;
-            }
-            else
-            {
-                CheckboxKeepSignedIn.IsChecked = true;
-                _isKeepSignedIn = true;
-            }
-
-            CheckboxKeepSignedIn.Focus();
-        }
-        #endregion
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            _isKeepSignedIn = !_isKeepSignedIn;
+            CheckboxKeepSignedIn.IsChecked = _isKeepSignedIn;
         }
 
         private void TextBlockCreateAccount_Click(object sender, RoutedEventArgs e)
@@ -98,5 +85,6 @@ namespace Faculti.UI.Windows
             this.Close();
             register.Show();
         }
+        #endregion
     }
 }
