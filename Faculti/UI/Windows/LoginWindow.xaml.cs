@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Collections.Generic;
@@ -87,8 +87,9 @@ namespace Faculti.UI.Windows
         }
         #endregion
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
+
         }
 
         private void TextBlockCreateAccount_Click(object sender, RoutedEventArgs e)
