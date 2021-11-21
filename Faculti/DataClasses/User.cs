@@ -48,6 +48,7 @@ namespace Faculti.DataClasses
             }
         }
 
+        private string _passwordInHash;
         public string PasswordInHash
         {
             get { return _passwordInHash; }
