@@ -1,4 +1,4 @@
-﻿using Faculti.DataRepo.DatabaseManager;
+using Faculti.DataRepo.DatabaseManager;
 using Faculti.Helpers;
 using Oracle.ManagedDataAccess.Client;
 using System;
@@ -177,6 +177,28 @@ namespace Faculti.DataClasses
         }
 
         /// <summary>
+        /// Checks if the email of the user is already registered on the database.
+        /// </summary>
+        public async Task<bool> IsEmailOrNumberAlreadyRegistered()
+        {
+            string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
+            string toCheckValue = PhoneNumberInHash ?? Email;
+
+            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+
+            int records = 0;
+            await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
+
+            if (records > 0) // there is a record containing the email
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks if the user exists in the database.
         /// </summary> 
         public async Task<bool> HaveCredentialsMatchedAsync()
@@ -184,11 +206,13 @@ namespace Faculti.DataClasses
             string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
             string toCheckValue = PhoneNumberInHash ?? Email;
 
-            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD = '{PasswordInHash}'";
-            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection); 
+            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
 
-            var records = await Task.Run(() => command.ExecuteNonQuery());
-            if (records > 0) // there is a record
+            int records = 0;
+            await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
+
+            if (records > 0) // there is a record 
             {
                 return true;
             }
@@ -201,8 +225,7 @@ namespace Faculti.DataClasses
         /// </summary>
         public async void RetrieveGeneralInfoAsync()
         {
-            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
-
+            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS_TYPE, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
             await Task.Run(() => ReadData(cmdText, DbConnection));
         }
 
@@ -211,8 +234,7 @@ namespace Faculti.DataClasses
         /// </summary>
         public async void RetrieveGeneralInfoAsync(int userId, IDbConnection connection)
         {
-            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE USER_ID = {userId}";
-
+            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS_TYPE, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE USER_ID = {userId}";
             await Task.Run(() => ReadData(cmdText, connection));
         }
 
@@ -221,7 +243,7 @@ namespace Faculti.DataClasses
         /// </summary>
         private async void SetStatusAsync(Status status)
         {
-            var cmdText = $"UPDATE USERS SET STATUS = '{status}' WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
+            var cmdText = $"UPDATE USERS SET STATUS_TYPE = '{status}' WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
             using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
             await Task.Run(() => command.ExecuteNonQuery());
         }

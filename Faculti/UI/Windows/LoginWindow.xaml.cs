@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Collections.Generic;
@@ -87,22 +87,9 @@ namespace Faculti.UI.Windows
         }
         #endregion
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Parent p = new();
-            await p.CreateConnection();
-            p.FirstName = "Khyle";
-            p.RetrieveOwnedStudentInfo();
 
-            Post a = new();
-            a.Author = p;
-            MessageBox.Show(a.Author.FirstName);
-
-            //Student a = new();
-            //a.FirstName = "Vincent";
-            //a.GetParentInfo();
-
-            //MessageBox.Show(a.Parent.OwnedStudent.FirstName);
         }
 
         private void TextBlockCreateAccount_Click(object sender, RoutedEventArgs e)
