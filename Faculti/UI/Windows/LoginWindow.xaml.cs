@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Collections.Generic;
@@ -89,7 +89,7 @@ namespace Faculti.UI.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void TextBlockCreateAccount_Click(object sender, RoutedEventArgs e)

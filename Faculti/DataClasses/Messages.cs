@@ -1,4 +1,4 @@
-﻿using Faculti.DataRepo.DatabaseManager;
+using Faculti.DataRepo.DatabaseManager;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -100,6 +100,5 @@ namespace Faculti.DataClasses
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
         #endregion
-
     }
 }
