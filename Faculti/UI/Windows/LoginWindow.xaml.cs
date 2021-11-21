@@ -89,20 +89,6 @@ namespace Faculti.UI.Windows
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            Parent p = new();
-            await p.CreateConnection();
-            p.FirstName = "Khyle";
-            p.RetrieveOwnedStudentInfo();
-
-            Post a = new();
-            a.Author = p;
-            MessageBox.Show(a.Author.FirstName);
-
-            //Student a = new();
-            //a.FirstName = "Vincent";
-            //a.GetParentInfo();
-
-            //MessageBox.Show(a.Parent.OwnedStudent.FirstName);
         }
 
         private void TextBlockCreateAccount_Click(object sender, RoutedEventArgs e)
