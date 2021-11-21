@@ -80,6 +80,7 @@ namespace Faculti.DataClasses
             {
                 _firstName = value;
                 OnPropertyChanged("FirstName");
+                OnPropertyChanged("FullName");
             }
         }
 
@@ -89,14 +90,19 @@ namespace Faculti.DataClasses
             get { return _lastName; }
             set 
             { 
-                _lastName = value; 
-                OnPropertyChanged("LastName"); 
+                _lastName = value;
+                OnPropertyChanged("LastName");
+                OnPropertyChanged("FullName");
             }
         }
 
         public string FullName
         {
             get { return $"{_firstName} {_lastName}"; }
+            set
+            {
+                OnPropertyChanged("FullName");
+            }
         }
 
         private string _phoneNumberInHash;
@@ -205,7 +211,7 @@ namespace Faculti.DataClasses
         /// <summary>
         /// Checks if the email of the user is already registered on the database.
         /// </summary>
-        public async Task<bool> IsEmailOrNumberAlreadyRegistered()
+        public async Task<bool> IsEmailOrNumberAlreadyRegisteredAsync()
         {
             try
             {

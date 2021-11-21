@@ -127,7 +127,7 @@
 
 
     <Grid x:Name="LayoutRoot" VerticalAlignment="Top">
-        <TextBox x:Name="TextBoxInput" Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseTextbox}" Height="55" Width="320" Margin="0,0,0,28"/>
+        <TextBox x:Name="TextBoxInput" Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BaseTextbox}" Height="55" Width="320" Margin="0,0,0,28" TextChanged="TextBoxInput_TextChanged"/>
         <TextBlock x:Name="LabelTitle" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="{DynamicResource OpenSans}" FontWeight="Bold" Foreground="{StaticResource GrayDark}" Margin="12,9,237,62" FontSize="10"/>
         <StackPanel x:Name="PanelErrorMessage" Visibility="Hidden" Margin="0,50,0,0" Orientation="Horizontal" Height="15">
             <TextBlock Text="🔸" Foreground="{StaticResource ErrorRegular}" FontSize="10" Height="16" Width="13" Margin="12,0,0,0"/>

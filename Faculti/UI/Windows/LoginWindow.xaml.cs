@@ -35,7 +35,7 @@ namespace Faculti.UI.Windows
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Code login logic here
         }
 
         private void WindowLogin_Loaded(object sender, RoutedEventArgs e)
@@ -43,7 +43,6 @@ namespace Faculti.UI.Windows
             loginUser = new();
             DataContext = loginUser;
         }
-
 
 
         #region UI code behind
@@ -65,12 +64,6 @@ namespace Faculti.UI.Windows
         private void Toolbar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
-        }
-
-        private void TextBlockKepSignedIn_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _isKeepSignedIn = !_isKeepSignedIn;
-            CheckboxKeepSignedIn.IsChecked = _isKeepSignedIn;
         }
 
         private void CheckboxKeepSignedIn_Click(object sender, RoutedEventArgs e)
