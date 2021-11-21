@@ -1,4 +1,4 @@
-﻿using Faculti.DataRepo.DatabaseManager;
+using Faculti.DataRepo.DatabaseManager;
 using Faculti.Helpers;
 using Oracle.ManagedDataAccess.Client;
 using System;
