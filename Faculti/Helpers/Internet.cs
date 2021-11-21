@@ -3,10 +3,7 @@ using System.Net.NetworkInformation;
 
 namespace Faculti.Helpers
 {
-    /// <summary>
-    ///     Helper class relating about internet connectivity.
-    /// </summary>
-    internal class Internet
+    public class Internet
     {
         /// <summary>
         ///     Checks if an active internet connection is present.
