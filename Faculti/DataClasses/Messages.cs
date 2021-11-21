@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Faculti.DataClasses
 {
-    public class Messages : DatabaseWorker, IBase, INotifyPropertyChanged
+    public class Messages : DatabaseWorker, INotifyPropertyChanged
     {
         private int _id;
         public int Id

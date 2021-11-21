@@ -10,7 +10,7 @@ namespace Faculti.Helpers
     {
         public static int GenerateVerificationCode()
         {
-            Random randomizer = new Random();
+            Random randomizer = new();
             return randomizer.Next(1000, 9999);
         }
     }
