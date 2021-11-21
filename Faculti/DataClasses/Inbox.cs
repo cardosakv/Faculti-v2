@@ -57,11 +57,11 @@ namespace Faculti.DataClasses
             private set { _elapsedTime = value; }
         }
 
-        private User _lastAuthor;
-        public User LastAuthor
+        private int _lastUserId;
+        public int LastUserId
         {
-            get { return _lastAuthor; }
-            set { _lastAuthor = value; }
+            get { return _lastUserId; }
+            set { _lastUserId = value; }
         }
 
         /// <summary>
@@ -97,7 +97,6 @@ namespace Faculti.DataClasses
         private void ReadData(string cmdText, IDbConnection connection)
         {
             Contact = new();
-            LastAuthor = new();
 
             using IDbCommand command = Database.CreateCommand(cmdText, connection);
             using OracleDataReader reader = (OracleDataReader)command.ExecuteReader();
@@ -110,7 +109,7 @@ namespace Faculti.DataClasses
                 Contact.Id = userId1 == 0 ? userId2 : userId1;
                 LastMessage = reader.IsDBNull(3) ? null : reader.GetString(3);
                 LastUpdate = reader.IsDBNull(4) ? DateTime.MinValue : reader.GetOracleDate(4).Value;
-                LastAuthor.Id = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);            }
+                LastUserId = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);            }
         }
         #endregion
 

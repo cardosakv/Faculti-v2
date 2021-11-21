@@ -91,7 +91,11 @@
     <Compile Include="DataClasses\Student.cs" />
     <Compile Include="DataClasses\Teacher.cs" />
     <Compile Include="DataClasses\User.cs" />
+    <Compile Include="Helpers\Internet.cs" />
     <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\Picture.cs" />
+    <Compile Include="Helpers\Randomizer.cs" />
+    <Compile Include="Helpers\Security.cs" />
     <Compile Include="Helpers\Syntax.cs" />
     <Compile Include="Helpers\Time.cs" />
   </ItemGroup>
