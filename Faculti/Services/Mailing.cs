@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Faculti.Services
 {
-    internal class Email
+    internal class Mailing
     {
         /// <summary>
         ///     Sends verification code to the specified recepient email using Faculti credentials.
