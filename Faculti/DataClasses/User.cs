@@ -48,9 +48,16 @@ namespace Faculti.DataClasses
             }
         }
 
+        private string _passwordInHash;
         public string PasswordInHash
         {
-            get; private set;
+            get { return _passwordInHash; }
+            set
+            {
+                _passwordInHash = value;
+                _password = Security.Decrypt(value);
+                OnPropertyChanged("Password");
+            }
         }
 
         private string _password;
@@ -60,7 +67,7 @@ namespace Faculti.DataClasses
             set
             {
                 _password = value;
-                PasswordInHash = Security.Encrypt(value);
+                _passwordInHash = Security.Encrypt(value);
                 OnPropertyChanged("Password");
             }
         }
@@ -69,10 +76,10 @@ namespace Faculti.DataClasses
         public string FirstName
         {
             get { return _firstName; }
-            set 
-            { 
-                _firstName = value; 
-                OnPropertyChanged("FirstName"); 
+            set
+            {
+                _firstName = value;
+                OnPropertyChanged("FirstName");
             }
         }
 
@@ -96,10 +103,23 @@ namespace Faculti.DataClasses
         public string PhoneNumberInHash
         {
             get { return _phoneNumberInHash; }
+            set
+            {
+                _phoneNumberInHash = value;
+                _phoneNumber = Security.Decrypt(value);
+                OnPropertyChanged("PhoneNumber");
+            }
+        }
+
+        private string _phoneNumber;
+        public string PhoneNumber
+        {
+            get { return _phoneNumber; }
             set 
-            { 
-                _phoneNumberInHash = value; 
-                OnPropertyChanged("PhoneNumberInHash"); 
+            {
+                _phoneNumber = value;
+                _phoneNumberInHash = Security.Encrypt(value);
+                OnPropertyChanged("PhoneNumber"); 
             }
         }
 
