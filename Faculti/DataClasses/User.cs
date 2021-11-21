@@ -15,12 +15,12 @@ namespace Faculti.DataClasses
     {
         public User() { }
 
-        public User(UserType type, string? email, string? phoneNumberInHash, string passwordInHash)
+        public User(UserType type, string? email, string? phoneNumberInHash, string password)
         {
             _type = type;
             _email = email;
             _phoneNumberInHash = phoneNumberInHash;
-            _passwordInHash = passwordInHash;
+            _password = password;
         }
 
         private int _id;
@@ -48,14 +48,20 @@ namespace Faculti.DataClasses
             }
         }
 
-        private string _passwordInHash;
         public string PasswordInHash
         {
-            get { return _passwordInHash; }
-            set 
-            { 
-                _passwordInHash = value; 
-                OnPropertyChanged("PasswordInHash"); 
+            get; private set;
+        }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                _password = value;
+                PasswordInHash = Security.Encrypt(value);
+                OnPropertyChanged("Password");
             }
         }
 
@@ -172,7 +178,7 @@ namespace Faculti.DataClasses
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error adding user to the database.\n" + ex);
+                MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
             }
         }
 
@@ -181,18 +187,25 @@ namespace Faculti.DataClasses
         /// </summary>
         public async Task<bool> IsEmailOrNumberAlreadyRegistered()
         {
-            string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
-            string toCheckValue = PhoneNumberInHash ?? Email;
-
-            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}'";
-            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
-
-            int records = 0;
-            await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
-
-            if (records > 0) // there is a record containing the email
+            try
             {
-                return true;
+                string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
+                string toCheckValue = PhoneNumberInHash ?? Email;
+
+                var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}'";
+                using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+
+                int records = 0;
+                await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
+
+                if (records > 0) // there is a record containing the email
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
             }
 
             return false;
@@ -203,18 +216,25 @@ namespace Faculti.DataClasses
         /// </summary> 
         public async Task<bool> HaveCredentialsMatchedAsync()
         {
-            string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
-            string toCheckValue = PhoneNumberInHash ?? Email;
-
-            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}'";
-            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
-
-            int records = 0;
-            await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
-
-            if (records > 0) // there is a record 
+            try
             {
-                return true;
+                string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
+                string toCheckValue = PhoneNumberInHash ?? Email;
+
+                var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}'";
+                using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+
+                int records = 0;
+                await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
+
+                if (records > 0) // there is a record 
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
             }
 
             return false;
@@ -251,32 +271,39 @@ namespace Faculti.DataClasses
         #region Reading database data
         private void ReadData(string cmdText, IDbConnection connection)
         {
-            using IDbCommand command = Database.CreateCommand(cmdText, connection);
-            using OracleDataReader reader = (OracleDataReader)command.ExecuteReader();
+            try
+            { 
+                using IDbCommand command = Database.CreateCommand(cmdText, connection);
+                using OracleDataReader reader = (OracleDataReader)command.ExecuteReader();
 
-            if (reader.Read())
+                if (reader.Read())
+                {
+                    Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                    Type = reader.IsDBNull(1) ? UserType.Parent : (UserType)Enum.Parse(typeof(UserType), reader.GetString(1));
+                    FirstName = reader.IsDBNull(2) ? null : reader.GetString(2);
+                    LastName = reader.IsDBNull(3) ? null : reader.GetString(3);
+                    PhoneNumberInHash = reader.IsDBNull(4) ? null : reader.GetString(4);
+                    Email = reader.IsDBNull(5) ? null : reader.GetString(5);
+                    PasswordInHash = reader.IsDBNull(6) ? null : reader.GetString(6);
+                    Status = reader.IsDBNull(7) ? Status.Invisible : (Status)Enum.Parse(typeof(Status), reader.GetString(7));
+                    LastPicChange = reader.IsDBNull(9) ? DateTime.MinValue : reader.GetOracleDate(9).Value;
+                    LastOnline = reader.IsDBNull(10) ? DateTime.MinValue : reader.GetOracleDate(10).Value;
+
+                    byte[] image = reader.IsDBNull(8) ? null : (byte[])reader["PICTURE"];
+                    if (image == null)
+                    {
+                        Picture = Properties.Resources.default_profile;
+                    }
+                    else
+                    {
+                        MemoryStream ms = new(image);
+                        Picture = Image.FromStream(ms);
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
-                Type = reader.IsDBNull(1) ? UserType.Parent : (UserType)Enum.Parse(typeof(UserType), reader.GetString(1));
-                FirstName = reader.IsDBNull(2) ? null : reader.GetString(2);
-                LastName = reader.IsDBNull(3) ? null : reader.GetString(3);
-                PhoneNumberInHash = reader.IsDBNull(4) ? null : reader.GetString(4);
-                Email = reader.IsDBNull(5) ? null : reader.GetString(5);
-                PasswordInHash = reader.IsDBNull(6) ? null : reader.GetString(6);
-                Status = reader.IsDBNull(7) ? Status.Invisible : (Status)Enum.Parse(typeof(Status), reader.GetString(7));
-                LastPicChange = reader.IsDBNull(9) ? DateTime.MinValue : reader.GetOracleDate(9).Value;
-                LastOnline = reader.IsDBNull(10) ? DateTime.MinValue : reader.GetOracleDate(10).Value;
-
-                byte[] image = reader.IsDBNull(8) ? null : (byte[])reader["PICTURE"];
-                if (image == null)
-                {
-                    Picture = Properties.Resources.default_profile;
-                }
-                else
-                {
-                    MemoryStream ms = new(image);
-                    Picture = Image.FromStream(ms);
-                }
+                MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
             }
         }
         #endregion
