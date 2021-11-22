@@ -11,10 +11,7 @@ namespace Faculti.DataClasses
         private Student _ownedStudent;
         public Student OwnedStudent
         {
-            get 
-            { 
-                return _ownedStudent; 
-            }
+            get { return _ownedStudent; }
             set { _ownedStudent = value; }
         }
 
