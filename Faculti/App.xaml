@@ -4,11 +4,11 @@
              StartupUri="/UI/Windows/LoginWindow.xaml">
     <Application.Resources>
         <FontFamily x:Key="Montserrat">pack://application:,,,/Resources/Fonts/Montserrat/#Montserrat</FontFamily>
-        <FontFamily x:Key="OpenSans">pack://application:,,,/Resources/Fonts/Open_Sans_Condensed/#OpenSansCondensed</FontFamily>
+        <FontFamily x:Key="SourceSansPro">pack://application:,,,/Resources/fonts/Source_Sans_Pro/#Source Sans Pro</FontFamily>
         <Brush x:Key="White">#FFFFFF</Brush>
         <Brush x:Key="FacultiBlue">#19C0FF</Brush>
-        <Brush x:Key="FacultiBlueHover">#00B9FF</Brush>
-        <Brush x:Key="FacultiBluePressed">#17abe3</Brush>
+        <Brush x:Key="FacultiBlueHover">#07afed</Brush>
+        <Brush x:Key="FacultiBluePressed">#07a0d9</Brush>
         <Color x:Key="FacultiBlueColor">#17abe3</Color>
         <Brush x:Key="BlueDark">#231F20</Brush>
         <Brush x:Key="BlueMedium">#404040</Brush>
@@ -16,10 +16,10 @@
         <Brush x:Key="RedIdle">#FF2525</Brush>
         <Brush x:Key="RedPressed">#C91A1A</Brush>
         <Brush x:Key="BlueGray">#313F4F</Brush>
-        <Brush x:Key="GrayDark">#999999</Brush>
-        <Brush x:Key="GrayRegular">#C4C8CD</Brush>
-        <Brush x:Key="GrayMedium">#e6e6e6</Brush>
-        <Brush x:Key="GrayFaint">#EDEDED</Brush>
+        <Brush x:Key="GrayDark">#98a3ab</Brush>
+        <Brush x:Key="GrayRegular">#c4c9cf</Brush>
+        <Brush x:Key="GrayMedium">#e9edf1</Brush>
+        <Brush x:Key="GrayFaint">#F0F2F5</Brush>
         <Brush x:Key="ErrorFaint">#ffe6e6</Brush>
         <Brush x:Key="ErrorMedium">#fab9d0</Brush>
         <Brush x:Key="ErrorMediumHover">#fcdcdc</Brush>
@@ -87,11 +87,11 @@
         <Style x:Key="LoginButton" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="{StaticResource GrayRegular}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource GrayRegular}"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Content" Value="➧"/>
+            <Setter Property="Background" Value="{StaticResource FacultiBlue}"/>
+            <Setter Property="Foreground" Value="{StaticResource White}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Content" Value="🡢"/>
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -105,7 +105,7 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="BorderThickness" Value="0"/>
-                                <Setter Property="Background" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="Background" Value="{StaticResource FacultiBlueHover}"/>
                             </Trigger>
                             <Trigger Property="IsMouseCaptured" Value="True">
                                 <Setter Property="Foreground" Value="White"/>
@@ -133,6 +133,192 @@
                             </Trigger>
                             <Trigger Property="IsMouseCaptured" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource BlueDark}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BaseTextbox" TargetType="{x:Type TextBox}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{StaticResource BlueMedium}"/>
+            <Setter Property="Background" Value="{StaticResource GrayFaint}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource GrayFaint}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="IBeam"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Padding="8,27,15,9" CornerRadius="6" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GrayMedium}"/>
+                                <Setter Property="Background" Value="{StaticResource GrayMedium}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="True"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorRegular}"/>
+                                    <Setter Property="Background" Value="White"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="True"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorRegular}"/>
+                                    <Setter Property="Background" Value="White"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="False"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorMedium}"/>
+                                    <Setter Property="Background" Value="{StaticResource ErrorMediumHover}"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="False"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorMedium}"/>
+                                    <Setter Property="Background" Value="{StaticResource ErrorFaint}"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CaretBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="#231F20"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BaseTextbox2" TargetType="{x:Type TextBox}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{StaticResource BlueMedium}"/>
+            <Setter Property="Background" Value="{StaticResource GrayFaint}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource GrayFaint}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="IBeam"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Padding="0" CornerRadius="6" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GrayMedium}"/>
+                                <Setter Property="Background" Value="{StaticResource GrayMedium}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="True"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorRegular}"/>
+                                    <Setter Property="Background" Value="White"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="True"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorRegular}"/>
+                                    <Setter Property="Background" Value="White"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="False"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorMedium}"/>
+                                    <Setter Property="Background" Value="{StaticResource ErrorMediumHover}"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsMouseOver}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxInput, Path=IsFocused}" Value="False"/>
+                                    <Condition Binding="{Binding IsError}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ErrorMedium}"/>
+                                    <Setter Property="Background" Value="{StaticResource ErrorFaint}"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CaretBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="#231F20"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BaseTextHover2" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="{StaticResource GrayMedium}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Padding="0,0,0,0" BorderThickness="0" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource FacultiBlue}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseCaptured" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource FacultiBluePressed}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

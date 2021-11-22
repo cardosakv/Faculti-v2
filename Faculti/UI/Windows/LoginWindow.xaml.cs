@@ -33,9 +33,13 @@ namespace Faculti.UI.Windows
         private User loginUser;
         private bool _isKeepSignedIn;
 
+        public LoginWindow()
+        {
+            InitializeComponent();
+        }
+
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            // Code login logic here
         }
 
         private void WindowLogin_Loaded(object sender, RoutedEventArgs e)
