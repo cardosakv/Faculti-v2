@@ -8,10 +8,10 @@ namespace Faculti.Helpers
 {
     class Randomizer
     {
-        public static int GenerateVerificationCode()
+        public static int GenerateCode(int start, int end)
         {
             Random randomizer = new();
-            return randomizer.Next(1000, 9999);
+            return randomizer.Next(start, end);
         }
     }
 }

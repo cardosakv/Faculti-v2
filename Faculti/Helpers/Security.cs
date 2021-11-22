@@ -1,5 +1,6 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -63,5 +64,62 @@ namespace Faculti.Helpers
 
             return Convert.ToBase64String(resultArray, 0, resultArray.Length);
         }
+
+        public enum PasswordStrength
+        {
+            Blank = 0,
+            VeryWeak = 1,
+            Weak = 2,
+            Medium = 3,
+            Strong = 4,
+            VeryStrong = 5
+        }
+
+        /// <summary>
+        /// Determines the strength of the password.
+        /// </summary>
+        public static PasswordStrength GetPasswordStrength(string password)
+        {
+            int score = 0;
+            if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(password.Trim())) return PasswordStrength.Blank;
+            if (HasMinimumLength(password, 5)) score++;
+            if (HasMinimumLength(password, 8)) score++;
+            if (HasUpperCaseLetter(password) && HasLowerCaseLetter(password)) score++;
+            if (HasDigit(password)) score++;
+            if (HasSpecialChar(password)) score++;
+            return (PasswordStrength)score;
+        }
+
+        #region Password strength mini methods
+        public static bool HasMinimumLength(string password, int minLength)
+        {
+            return password.Length >= minLength;
+        }
+
+        public static bool HasMinimumUniqueChars(string password, int minUniqueChars)
+        {
+            return password.Distinct().Count() >= minUniqueChars;
+        }
+
+        public static bool HasDigit(string password)
+        {
+            return password.Any(c => char.IsDigit(c));
+        }
+
+        public static bool HasSpecialChar(string password)
+        {
+            return password.IndexOfAny("!@#$%^&*?_~-£().,".ToCharArray()) != -1;
+        }
+
+        public static bool HasUpperCaseLetter(string password)
+        {
+            return password.Any(c => char.IsUpper(c));
+        }
+
+        public static bool HasLowerCaseLetter(string password)
+        {
+            return password.Any(c => char.IsLower(c));
+        }
+        #endregion
     }
 }
