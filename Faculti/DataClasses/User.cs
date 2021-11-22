@@ -43,8 +43,8 @@ namespace Faculti.DataClasses
             get { return _email; }
             set 
             { 
-                _email = value; 
-                OnPropertyChanged("Email"); 
+                _email = value;
+                OnPropertyChanged("Email");
             }
         }
 
@@ -184,54 +184,67 @@ namespace Faculti.DataClasses
         /// <summary>
         /// Opens only one database connection for the user.
         /// </summary>
-        public async Task CreateConnection()
+        public async Task CreateConnectionAsync()
         {
             if (_dbConnection != null) _dbConnection.Close();
-            
-            _dbConnection = await Database.CreateOpenConnectionAsync();
+
+            try
+            {
+                _dbConnection = await Database.CreateOpenConnectionAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error creating connection to the database.\n" + ex);
+            }
         }
 
         /// <summary>
         /// Adds the user to the database.
         /// </summary>
-        public async void AddToDatabaseAsync()
+        public async Task AddToDatabaseAsync()
         {
-            try
+            var cmdText = $@"INSERT INTO USERS (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_IN_HASH, PHONE_NUMBER_IN_HASH, USER_TYPE) VALUES ('{FirstName}', '{LastName}', '{Email}', '{PasswordInHash}', '{PhoneNumberInHash}', '{Type}')";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+            await Task.Run(() =>
             {
-                var cmdText = $@"INSERT INTO USERS (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_IN_HASH, PHONE_NUMBER_IN_HASH) values ('{FirstName}', '{LastName}', '{Email}', '{PasswordInHash}', '{PhoneNumberInHash}')";
-                using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
-                await Task.Run(() => command.ExecuteNonQuery());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
-            }
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
         }
 
         /// <summary>
         /// Checks if the email of the user is already registered on the database.
         /// </summary>
-        public async Task<bool> IsEmailOrNumberAlreadyRegisteredAsync()
+        public async Task<bool> IsEmailOrNumberAvailableAsync()
         {
-            try
+            string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
+            string toCheckValue = PhoneNumberInHash ?? Email;
+
+            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+
+            int records = 0;
+            await Task.Run(() =>
             {
-                string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
-                string toCheckValue = PhoneNumberInHash ?? Email;
-
-                var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}'";
-                using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
-
-                int records = 0;
-                await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
-
-                if (records > 0) // there is a record containing the email
+                try
                 {
-                    return true;
+                    records = Convert.ToInt32(command.ExecuteScalar());
                 }
-            }
-            catch (Exception ex)
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
+
+            if (records > 0) // there is a record containing the email
             {
-                MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
+                return true;
             }
 
             return false;
@@ -242,25 +255,28 @@ namespace Faculti.DataClasses
         /// </summary> 
         public async Task<bool> HaveCredentialsMatchedAsync()
         {
-            try
+            string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
+            string toCheckValue = PhoneNumberInHash ?? Email;
+
+            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+
+            int records = 0;
+            await Task.Run(() => 
             {
-                string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
-                string toCheckValue = PhoneNumberInHash ?? Email;
-
-                var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}'";
-                using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
-
-                int records = 0;
-                await Task.Run(() => { records = Convert.ToInt32(command.ExecuteScalar()); });
-
-                if (records > 0) // there is a record 
+                try
                 {
-                    return true;
+                    records = Convert.ToInt32(command.ExecuteScalar());
                 }
-            }
-            catch (Exception ex)
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
+
+            if (records > 0) // there is a record 
             {
-                MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
+                return true;
             }
 
             return false;
@@ -272,7 +288,17 @@ namespace Faculti.DataClasses
         public async void RetrieveGeneralInfoAsync()
         {
             var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS_TYPE, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
-            await Task.Run(() => ReadData(cmdText, DbConnection));
+            await Task.Run(() =>
+            {
+                try
+                {
+                    ReadData(cmdText, DbConnection);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
         }
 
         /// <summary>
@@ -291,7 +317,17 @@ namespace Faculti.DataClasses
         {
             var cmdText = $"UPDATE USERS SET STATUS_TYPE = '{status}' WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
             using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
-            await Task.Run(() => command.ExecuteNonQuery());
+            await Task.Run(() =>
+            {
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
         }
 
         #region Reading database data

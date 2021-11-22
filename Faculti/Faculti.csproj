@@ -14,6 +14,8 @@
     <Compile Remove="Helpers\**" />
     <Compile Remove="Resources\Fonts\BebasNeue\**" />
     <Compile Remove="Resources\Fonts\Mark Pro\**" />
+    <Compile Remove="Resources\Fonts\Open_Sans_Condensed\**" />
+    <Compile Remove="Resources\Fonts\Oswald\**" />
     <Compile Remove="UI\Cards\**" />
     <Compile Remove="UI\Forms\**" />
     <Compile Remove="Utils\**" />
@@ -21,6 +23,8 @@
     <EmbeddedResource Remove="Helpers\**" />
     <EmbeddedResource Remove="Resources\Fonts\BebasNeue\**" />
     <EmbeddedResource Remove="Resources\Fonts\Mark Pro\**" />
+    <EmbeddedResource Remove="Resources\Fonts\Open_Sans_Condensed\**" />
+    <EmbeddedResource Remove="Resources\Fonts\Oswald\**" />
     <EmbeddedResource Remove="UI\Cards\**" />
     <EmbeddedResource Remove="UI\Forms\**" />
     <EmbeddedResource Remove="Utils\**" />
@@ -28,6 +32,8 @@
     <None Remove="Helpers\**" />
     <None Remove="Resources\Fonts\BebasNeue\**" />
     <None Remove="Resources\Fonts\Mark Pro\**" />
+    <None Remove="Resources\Fonts\Open_Sans_Condensed\**" />
+    <None Remove="Resources\Fonts\Oswald\**" />
     <None Remove="UI\Cards\**" />
     <None Remove="UI\Forms\**" />
     <None Remove="Utils\**" />
@@ -35,6 +41,8 @@
     <Page Remove="Helpers\**" />
     <Page Remove="Resources\Fonts\BebasNeue\**" />
     <Page Remove="Resources\Fonts\Mark Pro\**" />
+    <Page Remove="Resources\Fonts\Open_Sans_Condensed\**" />
+    <Page Remove="Resources\Fonts\Oswald\**" />
     <Page Remove="UI\Cards\**" />
     <Page Remove="UI\Forms\**" />
     <Page Remove="Utils\**" />
@@ -64,15 +72,25 @@
     <None Remove="Resources\Fonts\Montserrat\Montserrat-SemiBoldItalic.ttf" />
     <None Remove="Resources\Fonts\Montserrat\Montserrat-Thin.ttf" />
     <None Remove="Resources\Fonts\Montserrat\Montserrat-ThinItalic.ttf" />
-    <None Remove="Resources\Fonts\Open_Sans_Condensed\OpenSansCondensed-Bold.ttf" />
-    <None Remove="Resources\Fonts\Open_Sans_Condensed\OpenSansCondensed-Light.ttf" />
-    <None Remove="Resources\Fonts\Open_Sans_Condensed\OpenSansCondensed-LightItalic.ttf" />
-    <None Remove="Resources\fonts\Oswald\Oswald-VariableFont_wght.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-Black.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-BlackItalic.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-Bold.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-BoldItalic.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-ExtraLight.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-ExtraLightItalic.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-Italic.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-Light.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-LightItalic.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-Regular.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-SemiBold.ttf" />
+    <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-SemiBoldItalic.ttf" />
+    <None Remove="Resources\Images\cheers.png" />
     <None Remove="Resources\Images\faculti-logo-black-50px.png" />
     <None Remove="Resources\Images\faculti-logo-black-small.png" />
     <None Remove="Resources\Images\faculti-logo-black.png" />
     <None Remove="Resources\Images\faculti-logo.png" />
     <None Remove="Resources\Images\faculti-logotype.png" />
+    <None Remove="Resources\Images\loader.gif" />
     <None Remove="Resources\Images\password-hide.png" />
     <None Remove="Resources\Images\password-show.png" />
     <None Remove="Resources\Images\splashscreen-bg.png" />
@@ -96,6 +114,7 @@
     <Compile Include="Helpers\Picture.cs" />
     <Compile Include="Helpers\Randomizer.cs" />
     <Compile Include="Helpers\Security.cs" />
+    <Compile Include="Helpers\SMS.cs" />
     <Compile Include="Helpers\Syntax.cs" />
     <Compile Include="Helpers\Time.cs" />
   </ItemGroup>
@@ -109,6 +128,8 @@
     <PackageReference Include="NLog" Version="4.7.12" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.4" />
+    <PackageReference Include="telerik.ui.for.wpf.netcore.xaml.trial" Version="2021.3.1109" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -166,16 +187,43 @@
     <Resource Include="Resources\Fonts\Montserrat\Montserrat-ThinItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Fonts\Open_Sans_Condensed\OpenSansCondensed-Bold.ttf">
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-Black.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Fonts\Open_Sans_Condensed\OpenSansCondensed-Light.ttf">
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-BlackItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Fonts\Open_Sans_Condensed\OpenSansCondensed-LightItalic.ttf">
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-Bold.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\fonts\Oswald\Oswald-VariableFont_wght.ttf">
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-BoldItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-ExtraLight.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-ExtraLightItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-Italic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-Light.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-LightItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-SemiBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-SemiBoldItalic.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\cheers.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\faculti-logo-black-50px.png" />
@@ -185,13 +233,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\faculti-logotype.png" />
+    <Resource Include="Resources\Images\loader.gif">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Images\password-hide.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\password-show.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\create-account-bg.png" />
+    <Resource Include="Resources\Images\create-account-bg.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -212,6 +265,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\BaseTextbox2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Controls\ConfirmPasswordTextBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Pages\SignupStep3.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Pages\SignupStep2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -222,7 +287,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Page Update="UI\Controls\BaseTextbox2.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Controls\ConfirmPasswordTextBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Pages\SignupStep3.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Pages\SignupStep2.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>
