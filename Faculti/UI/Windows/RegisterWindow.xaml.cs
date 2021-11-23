@@ -31,7 +31,7 @@ namespace Faculti.UI.Windows
         private readonly SignupStep1 _step1 = new();
         private readonly SignupStep2 _step2 = new();
         private readonly SignupStep3 _step3 = new();
-        private User _signupUser = new();
+        private readonly User _signupUser = new();
         private string _tempPass = String.Empty;
         private bool _isSucess = false;
 
@@ -91,6 +91,7 @@ namespace Faculti.UI.Windows
                 await Task.Delay(1000);
 
                 _isSucess = true;
+                Frame.Navigate(_step3);
                 _step3.SetSuccessMessage();
                 ShowSuccessUI();
 
@@ -167,19 +168,8 @@ namespace Faculti.UI.Windows
 
         private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-            var ta = new ThicknessAnimation();
-            ta.Duration = TimeSpan.FromSeconds(0.3);
-            ta.DecelerationRatio = 0.7;
-            ta.To = new Thickness(0, 0, 0, 0);
-            if (e.NavigationMode == NavigationMode.New)
-            {
-                ta.From = new Thickness(500, 0, 0, 0);
-            }
-            else if (e.NavigationMode == NavigationMode.Back)
-            {
-                ta.From = new Thickness(0, 0, 500, 0);
-            }
-                 (e.Content as Page).BeginAnimation(MarginProperty, ta);
+            var fa = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.3));
+            (e.Content as Page).BeginAnimation(OpacityProperty, fa);
         }
         #endregion
     }
