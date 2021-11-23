@@ -72,7 +72,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <Rectangle HorizontalAlignment="Left" Height="650" VerticalAlignment="Top" Width="529" RadiusX="0" RadiusY="0" Fill="#FFF2F7FF" Grid.RowSpan="2"/>
+        <Rectangle HorizontalAlignment="Left" Height="650" VerticalAlignment="Top" Width="525" RadiusX="0" RadiusY="0" Fill="#FFF2F7FF" Grid.RowSpan="2"/>
         <Image HorizontalAlignment="Left" Height="466" VerticalAlignment="Top" Width="441" Source="/Resources/Images/create-account-bg.png" Stretch="Uniform" StretchDirection="Both" Margin="24,8,0,0" Grid.Row="1"/>
         <TextBlock HorizontalAlignment="Left" Margin="44,461,0,0" Grid.Row="1" TextWrapping="Wrap" Text="CREATE AN ACCOUNT" VerticalAlignment="Top" Foreground="{DynamicResource BlueDark}" FontFamily="{DynamicResource Montserrat}" FontWeight="Black" FontSize="40" Width="305" FontStretch="Normal" Height="76" LineHeight="40" LineStackingStrategy="BlockLineHeight"/>
         <TextBlock HorizontalAlignment="Left" Margin="44,568,0,0" Grid.Row="1" TextWrapping="NoWrap" Text="© 2021 FACULTI. ALL RIGHTS RESERVED." VerticalAlignment="Top" FontFamily="{DynamicResource Montserrat}" Foreground="{DynamicResource GrayDark}" FontSize="7" FontWeight="SemiBold"/>
