@@ -82,6 +82,7 @@ namespace Faculti.UI.Windows
             else if (Frame.Content == _step3 && _isSucess)
             {
                 LoginWindow login = new();
+                _signupUser.DbConnection.Close();
                 this.Close();
                 login.Show();
             }
