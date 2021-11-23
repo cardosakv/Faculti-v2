@@ -11,7 +11,7 @@
         Focusable="True"
         WindowStartupLocation="CenterScreen"
         Height="650" 
-        Width="650"
+        Width="530"
         MouseDown="WindowLogin_MouseDown" 
         Loaded="WindowLogin_Loaded">
 

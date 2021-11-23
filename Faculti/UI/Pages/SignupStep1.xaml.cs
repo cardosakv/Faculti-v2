@@ -82,14 +82,14 @@ namespace Faculti.UI.Pages
             else
             {
                 TextBoxEmail.IsError = false;
-                TextBoxEmail.ErrorText = "Email is invalid.";
+                TextBoxEmail.ErrorText = "Invalid email format.";
             }
         }
 
         private void SetEmailError()
         {
             TextBoxEmail.IsError = true;
-            TextBoxEmail.ErrorText = "Email is invalid.";
+            TextBoxEmail.ErrorText = "Invalid email format.";
         }
 
         private void ButtonParent_Checked(object sender, RoutedEventArgs e)

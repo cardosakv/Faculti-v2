@@ -81,15 +81,17 @@
             <Frame x:Name="Frame" NavigationUIVisibility="Hidden" Height="380" Width="400" Padding="0" HorizontalAlignment="Right" Margin="0,80,0,0" MouseDown="Frame_MouseDown" Navigating="Frame_Navigating"/>
             <Button x:Name="ButtonNext" Style="{StaticResource LoginButton}" IsEnabled="{Binding HasNoErrors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Next" Width="60" Height="60" Click="ButtonNext_Click" HorizontalAlignment="Right" Margin="0,15,170,0"/>
         </StackPanel>
+        
         <Image HorizontalAlignment="Left" Height="26" Margin="44,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="32" Source="/Resources/Images/faculti-logo-black-50px.png"/>
         <StackPanel Background="Transparent" x:Name="Toolbar" MouseDown="Toolbar_MouseDown" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" OpacityMask="Black">
             <Button x:Name="Close" Style="{StaticResource CloseButtonStyle}" Content="╳" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Close_Click"/>
             <Button x:Name="Minimize" Style="{StaticResource MinimizeButtonStyle}" Content="—" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Minimize_Click"/>
         </StackPanel>
+        
         <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Margin="634,17,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Welcome to Faculti" VerticalAlignment="Top" Foreground="{StaticResource BlueDark}" FontFamily="{StaticResource Montserrat}" FontWeight="Bold" FontSize="18" Width="186" FontStretch="Normal" Height="32" LineHeight="40" LineStackingStrategy="MaxHeight"/>
         <TextBlock x:Name="Caption" HorizontalAlignment="Left" Margin="606,45,0,0" Grid.Row="1" TextWrapping="NoWrap" Text="Create an account to start using the application." VerticalAlignment="Top" FontFamily="{StaticResource SourceSansPro}" Foreground="{StaticResource GrayRegular}" FontSize="12" FontWeight="Regular" Width="242"/>
         <Button x:Name="ButtonLogin" Style="{StaticResource BaseTextHover}" Content="ALREADY HAVE AN ACCOUNT?" HorizontalAlignment="Left" Margin="638,573,0,0" Grid.Row="1" VerticalAlignment="Top" Width="182" FontWeight="SemiBold" Click="ButtonLogin_Click" FontFamily="{DynamicResource SourceSansPro}"/>
-        <Button x:Name="ButtonPrevious" Style="{StaticResource BaseTextHover2}" Content="🡨" HorizontalAlignment="Left" Margin="560,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="24" FontWeight="SemiBold" Click="ButtonPrevious_Click" FontFamily="Agency FB" FontSize="18" IsCancel="True"/>
+        <Button x:Name="ButtonPrevious" Style="{StaticResource BaseTextHover2}" Content="🡨" HorizontalAlignment="Left" Margin="557,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="24" FontWeight="SemiBold" Click="ButtonPrevious_Click" FontFamily="Agency FB" FontSize="18" IsCancel="True"/>
         <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden" HorizontalAlignment="Left" Margin="264,417,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
         <StackPanel x:Name="PanelEmailAvailableError" Visibility="Hidden" Orientation="Horizontal" Margin="566,428,166,172" Grid.Row="1">
             <TextBlock Text="🔸" Foreground="{StaticResource ErrorRegular}" FontSize="10" Height="16" Width="13" Margin="12,0,0,0"/>
