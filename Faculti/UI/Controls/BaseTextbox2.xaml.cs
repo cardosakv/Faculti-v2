@@ -9,9 +9,9 @@ namespace Faculti.UI.Controls
     /// <summary>
     /// Interaction logic for BaseTextbox.xaml
     /// </summary>
-    public partial class BaseTextBox : UserControl
+    public partial class BaseTextBox2 : UserControl
     {
-        public BaseTextBox()
+        public BaseTextBox2()
         {
             InitializeComponent();
             LayoutRoot.DataContext = this;
@@ -49,7 +49,7 @@ namespace Faculti.UI.Controls
 
         public static readonly DependencyProperty TextProperty = 
             DependencyProperty.Register("Text", typeof(string),
-            typeof(BaseTextBox), new PropertyMetadata(""));
+            typeof(BaseTextBox2), new PropertyMetadata(""));
 
         public string Title
         {
@@ -59,7 +59,7 @@ namespace Faculti.UI.Controls
 
         public static readonly DependencyProperty TitleProperty = 
             DependencyProperty.Register("Title", typeof(string), 
-            typeof(BaseTextBox), new PropertyMetadata("Title"));
+            typeof(BaseTextBox2), new PropertyMetadata("Title"));
 
         public bool IsError
         {
@@ -69,12 +69,10 @@ namespace Faculti.UI.Controls
                 SetValue(IsErrorProperty, value);
                 if (value == true)
                 {
-                    LabelTitle.Foreground = (Brush)Application.Current.Resources["ErrorRegular"];
                     PanelErrorMessage.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    LabelTitle.Foreground = (Brush)Application.Current.Resources["GrayDark"];
                     PanelErrorMessage.Visibility = Visibility.Hidden;
                 }
             }
@@ -82,7 +80,7 @@ namespace Faculti.UI.Controls
 
         public static readonly DependencyProperty IsErrorProperty =
             DependencyProperty.Register("IsError", typeof(bool),
-            typeof(BaseTextBox), new PropertyMetadata(false));
+            typeof(BaseTextBox2), new PropertyMetadata(false));
 
         public string ErrorText
         {
@@ -92,7 +90,7 @@ namespace Faculti.UI.Controls
 
         public static readonly DependencyProperty ErrorTextProperty = 
             DependencyProperty.Register("ErrorText", typeof(string),
-            typeof(BaseTextBox), new PropertyMetadata("Error text here."));
+            typeof(BaseTextBox2), new PropertyMetadata("Error text here."));
 
 
         #region UI
