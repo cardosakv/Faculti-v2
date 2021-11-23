@@ -47,7 +47,7 @@
     </Page.Resources>
 
     <Grid>
-        <TextBlock x:Name="Title" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,55,8,0" TextWrapping="NoWrap" Text="Verify your email" VerticalAlignment="Top" FontFamily="{StaticResource SourceSansPro}" Foreground="{DynamicResource GrayDark}" FontSize="16" FontWeight="SemiBold" Width="308"/>
+        <TextBlock x:Name="Title" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,55,8,0" TextWrapping="NoWrap" Text="Verify your account" VerticalAlignment="Top" FontFamily="{StaticResource SourceSansPro}" Foreground="{DynamicResource GrayDark}" FontSize="16" FontWeight="SemiBold" Width="308"/>
         <TextBlock x:Name="Caption" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,80,8,0" TextWrapping="NoWrap" Text="We have sent a verification code to your email." VerticalAlignment="Top" FontFamily="{StaticResource SourceSansPro}" Foreground="{DynamicResource GrayRegular}" FontWeight="Regular" Width="330" FontSize="14"/>
         <Controls:BaseTextBox2 x:Name="TextBoxCode" HorizontalAlignment="Center" Margin="0,124,8,0" ErrorText="Code is invalid." VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Center" Visibility="Hidden" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding ElementName=TextBoxCode, Path=Text, Mode=OneWay}" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
