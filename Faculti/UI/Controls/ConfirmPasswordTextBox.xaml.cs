@@ -110,6 +110,7 @@ namespace Faculti.UI.Controls
         {
             IsError = !(TextBoxInput.Password == PasswordToConfirm);
             Text = TextBoxInput.Password;
+            MaskPassword.Text = Text;
         }
         #endregion
     }

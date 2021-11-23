@@ -230,15 +230,16 @@ namespace Faculti.DataClasses
             using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
 
             int records = 0;
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 try
                 {
                     records = Convert.ToInt32(command.ExecuteScalar());
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Database connection error.\n" + ex);
+                    await CreateConnectionAsync();
+                    records = Convert.ToInt32(command.ExecuteScalar());
                 }
             });
 
