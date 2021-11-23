@@ -127,7 +127,8 @@ namespace Faculti.UI.Windows
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            LoginWindow login = new LoginWindow();
+            LoginWindow login = new();
+            _signupUser.DbConnection.Close();
             this.Close();
             login.Show();
         }
@@ -139,6 +140,7 @@ namespace Faculti.UI.Windows
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            _signupUser.DbConnection.Close();
             Environment.Exit(0);
         }
 
