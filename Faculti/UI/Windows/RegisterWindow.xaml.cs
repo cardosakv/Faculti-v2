@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -170,6 +171,15 @@ namespace Faculti.UI.Windows
         {
             var fa = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.3));
             (e.Content as Page).BeginAnimation(OpacityProperty, fa);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                FocusManager.SetFocusedElement(this, this);
+                ButtonNext.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            }
         }
         #endregion
     }
