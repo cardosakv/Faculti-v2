@@ -43,7 +43,7 @@ namespace Faculti.DataClasses
             get { return _email; }
             set 
             { 
-                _email = value;
+                _email = value.Trim();
                 OnPropertyChanged("Email");
             }
         }
@@ -78,7 +78,7 @@ namespace Faculti.DataClasses
             get { return _firstName; }
             set
             {
-                _firstName = value;
+                _firstName = value.Trim();
                 OnPropertyChanged("FirstName");
                 OnPropertyChanged("FullName");
             }
@@ -90,7 +90,7 @@ namespace Faculti.DataClasses
             get { return _lastName; }
             set 
             { 
-                _lastName = value;
+                _lastName = value.Trim();
                 OnPropertyChanged("LastName");
                 OnPropertyChanged("FullName");
             }
