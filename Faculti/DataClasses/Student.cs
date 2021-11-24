@@ -34,7 +34,7 @@ namespace Faculti.DataClasses
             get { return _firstName; }
             set
             {
-                _firstName = value.Trim();
+                _firstName = value;
                 OnPropertyChanged("FirstName");
             }
         }
@@ -45,7 +45,7 @@ namespace Faculti.DataClasses
             get { return _lastName; }
             set
             {
-                _lastName = value.Trim();
+                _lastName = value;
                 OnPropertyChanged("LastName");
             }
         }

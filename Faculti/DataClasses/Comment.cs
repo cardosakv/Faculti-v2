@@ -26,7 +26,7 @@ namespace Faculti.DataClasses
             get { return _text; }
             set
             {
-                _text = value.Trim();
+                _text = value;
                 OnPropertyChanged("Text");
             }
         }
