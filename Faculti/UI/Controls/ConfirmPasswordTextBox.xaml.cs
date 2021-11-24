@@ -108,9 +108,14 @@ namespace Faculti.UI.Controls
 
         private void PasswordHidden_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            IsError = !(TextBoxInput.Password == PasswordToConfirm);
+            IsError = TextBoxInput.Password != PasswordToConfirm;
             Text = TextBoxInput.Password;
             MaskPassword.Text = Text;
+        }
+
+        private void UserControl_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+            IsError = TextBoxInput.Password != PasswordToConfirm;
         }
         #endregion
     }

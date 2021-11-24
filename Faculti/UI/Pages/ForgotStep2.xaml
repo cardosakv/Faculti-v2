@@ -1,0 +1,52 @@
+﻿<Page x:Class="Faculti.UI.Pages.ForgotStep2"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Faculti.UI.Pages" xmlns:Controls="clr-namespace:Faculti.UI.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="310" 
+      d:DesignWidth="380"
+      Background="White"
+      Title="ForgotStep2">
+
+    <Grid>
+        <TextBlock x:Name="Title" 
+                   TextAlignment="Center" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,55,8,0" 
+                   TextWrapping="NoWrap" 
+                   Text="Verify your account" 
+                   VerticalAlignment="Top" 
+                   FontFamily="{StaticResource SourceSansPro}" 
+                   Foreground="{DynamicResource GrayDark}" 
+                   FontSize="16" 
+                   FontWeight="SemiBold" 
+                   Width="308"/>
+        <TextBlock x:Name="Caption" 
+                   TextAlignment="Center" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,80,8,0" 
+                   TextWrapping="NoWrap" 
+                   Text="We have sent a security code to your email." 
+                   VerticalAlignment="Top" 
+                   FontFamily="{StaticResource SourceSansPro}" 
+                   Foreground="{DynamicResource GrayRegular}" 
+                   FontWeight="Regular" 
+                   Width="330" 
+                   FontSize="14"/>
+        <Controls:BaseTextBox2 x:Name="TextBoxCode" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,125,5,0" 
+                               ErrorText="Code is invalid." 
+                               VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Center" 
+                 Visibility="Hidden" 
+                 Margin="0,0,0,0" 
+                 TextWrapping="Wrap"
+                 Text="{Binding ElementName=TextBoxCode, Path=Text, Mode=OneWay}"
+                 VerticalAlignment="Top" 
+                 Width="120" 
+                 TextChanged="TextBox_TextChanged"/>
+    </Grid>
+</Page>

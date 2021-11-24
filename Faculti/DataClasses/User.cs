@@ -43,7 +43,7 @@ namespace Faculti.DataClasses
             get { return _email; }
             set 
             { 
-                _email = value;
+                _email = value.Trim();
                 OnPropertyChanged("Email");
             }
         }
@@ -78,7 +78,7 @@ namespace Faculti.DataClasses
             get { return _firstName; }
             set
             {
-                _firstName = value;
+                _firstName = value.Trim();
                 OnPropertyChanged("FirstName");
                 OnPropertyChanged("FullName");
             }
@@ -90,7 +90,7 @@ namespace Faculti.DataClasses
             get { return _lastName; }
             set 
             { 
-                _lastName = value;
+                _lastName = value.Trim();
                 OnPropertyChanged("LastName");
                 OnPropertyChanged("FullName");
             }
@@ -196,6 +196,26 @@ namespace Faculti.DataClasses
             {
                 MessageBox.Show("Error creating connection to the database.\n" + ex);
             }
+        }
+
+        /// <summary>
+        /// Updates the password of the user to the database.
+        /// </summary>
+        public async Task UpdatePassword()
+        {
+            var cmdText = $@"UPDATE USERS SET PASSWORD_IN_HASH = '{PasswordInHash}' WHERE EMAIL = '{Email}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+            await Task.Run(() =>
+            {
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
         }
 
         /// <summary>

@@ -18,13 +18,11 @@ using System.Windows.Shapes;
 namespace Faculti.UI.Pages
 {
     /// <summary>
-    /// Interaction logic for SignupStep1.xaml
+    /// Interaction logic for ForgotStep1.xaml
     /// </summary>
-    public partial class SignupStep1 : Page
+    public partial class ForgotStep1 : Page
     {
-        public UserType userType = UserType.Parent;
-
-        public SignupStep1()
+        public ForgotStep1()
         {
             InitializeComponent();
         }
@@ -34,33 +32,18 @@ namespace Faculti.UI.Pages
             FocusManager.SetFocusedElement(this, this);
         }
 
-        /// <summary>
-        /// Checks errors on the textboxes.
-        /// </summary>
         public async Task<bool> CheckErrorsAsync(User signupUser)
         {
             var isError = false;
-
-            if (string.IsNullOrEmpty(TextBoxFirstName.Text))
-            {
-                TextBoxFirstName.IsError = true;
-                isError = true;
-            }
-
-            if (string.IsNullOrEmpty(TextBoxLastName.Text))
-            {
-                TextBoxLastName.IsError = true;
-                isError = true;
-            }
 
             if (string.IsNullOrEmpty(TextBoxEmail.Text) || !Syntax.IsValidEmail(TextBoxEmail.Text))
             {
                 SetEmailError();
                 isError = true;
             }
-            else 
+            else
             {
-                bool isEmailError = await signupUser.IsEmailOrNumberAvailableAsync();
+                bool isEmailError = !await signupUser.IsEmailOrNumberAvailableAsync();
 
                 if (isEmailError)
                 {
@@ -77,7 +60,7 @@ namespace Faculti.UI.Pages
             if (isError)
             {
                 TextBoxEmail.IsError = true;
-                TextBoxEmail.ErrorText = "Email already registered.";
+                TextBoxEmail.ErrorText = "Email is not associated to any account.";
             }
             else
             {
@@ -90,16 +73,6 @@ namespace Faculti.UI.Pages
         {
             TextBoxEmail.IsError = true;
             TextBoxEmail.ErrorText = "Invalid email format.";
-        }
-
-        private void ButtonParent_Checked(object sender, RoutedEventArgs e)
-        {
-            userType = UserType.Parent;
-        }
-
-        private void ButtonTeacher_Checked(object sender, RoutedEventArgs e)
-        {
-            userType = UserType.Teacher;
         }
     }
 }

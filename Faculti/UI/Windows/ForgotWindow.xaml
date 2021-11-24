@@ -3,17 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        x:Name="WindowLogin" x:Class="Faculti.UI.Windows.LoginWindow"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com" 
+        x:Name="WindowLogin" x:Class="Faculti.UI.Windows.ForgotWindow"
         mc:Ignorable="d"
-        Title="Faculti - Sign In" 
+        Title="Forgot Password"
         WindowStyle="None"
         ResizeMode="NoResize"
         Focusable="True"
         WindowStartupLocation="CenterScreen"
         Height="650" 
         Width="530"
-        MouseDown="WindowLogin_MouseDown" 
-        Loaded="WindowLogin_Loaded">
+        MouseDown="WindowLogin_MouseDown" Loaded="WindowLogin_Loaded" KeyDown="WindowLogin_KeyDown">
 
     <Window.Resources>
         <Style x:Key="MinimizeButtonStyle" TargetType="{x:Type Button}">
@@ -74,33 +74,77 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="0" Grid.Row="2">
-            <Image x:Name="image" Source="/Resources/Images/faculti-logo-black.png" HorizontalAlignment="Center" Height="68" Margin="0,5,0,0" Width="66" RenderTransformOrigin="0.5,0.5"/>
-            <TextBlock Text="SIGN IN" FontFamily="{StaticResource Montserrat}" FontStyle="Normal" FontWeight="UltraBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0" FontSize="22" Foreground="{DynamicResource BlueDark}"/>
-
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <RadioButton x:Name="ButtonParent" Style="{StaticResource BaseRadioButton}" IsChecked="True" Padding="0,4,0,0" Content="PARENT" Height="45" Width="90" Margin="10, 35, 10, 3" FontSize="11"/>
-                <RadioButton x:Name="ButtonTeacher" Style="{StaticResource BaseRadioButton}" Padding="0,4,0,0" Content="TEACHER" Height="45" Width="90" Margin="10, 35, 10, 3" FontSize="11"/>
-            </StackPanel>
-
-            <Controls:BaseTextBox x:Name="TextBoxEmail" ValidationType="Email" ErrorText="Invalid email format." Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Title="EMAIL" Margin="0,30,0,0"/>
-            <Controls:PasswordTextBox x:Name="TextBoxPassword" Title="PASSWORD" Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ErrorText="Minimum of 8 characters." Margin="0"/>
-
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0">
-                <CheckBox x:Name="CheckboxKeepSignedIn" Style="{StaticResource BaseCheckbox}" FontSize="9" Height="19" Width="19" Margin="2,0,0,0" Click="CheckboxKeepSignedIn_Click"/>
-                <TextBlock Text="Stay signed in" FontFamily="{DynamicResource SourceSansPro}" VerticalAlignment="Center" Margin="8,0,0,1" FontWeight="SemiBold" Foreground="{StaticResource GrayDark}" MouseDown="CheckboxKeepSignedIn_Click"/>
-            </StackPanel>
-
-            <Button x:Name="ButtonLogin" Style="{StaticResource LoginButton}" ToolTip="Sign In" Margin="0,20,0,0" Width="60" Height="60" Click="ButtonLogin_Click"/>
-            <Button x:Name="TextBlockCreateAccount" Style="{StaticResource BaseTextHover}" Content="CREATE ACCOUNT" HorizontalContentAlignment="Center" FontFamily="{DynamicResource SourceSansPro}" FontWeight="SemiBold" Margin="0,35,0,0" FontSize="12" Width="100" Click="TextBlockCreateAccount_Click"/>
-            <Button x:Name="TextBlockForgotPassword" Style="{StaticResource BaseTextHover}" Content="FORGOT PASSWORD?" HorizontalContentAlignment="Center" FontFamily="{DynamicResource SourceSansPro}" FontWeight="SemiBold" Margin="0,7,0,0" FontSize="12" Width="115" Click="TextBlockForgotPassword_Click"/>
+        <StackPanel HorizontalAlignment="Center" 
+                    Orientation="Vertical" 
+                    Grid.Column="0" 
+                    Grid.Row="2">
+            <Image Source="/Resources/Images/faculti-logo-black.png" 
+                   HorizontalAlignment="Center" 
+                   Height="68" 
+                   Margin="0,5,0,0" 
+                   Width="66"/>
+            <TextBlock x:Name="Title"
+                       Text="PASSWORD RESET" 
+                       FontFamily="{StaticResource Montserrat}" 
+                       FontStyle="Normal" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Margin="0,25,0,0" 
+                       FontSize="22" 
+                       Foreground="{DynamicResource BlueDark}"/>
+            <Frame x:Name="Frame" 
+                   NavigationUIVisibility="Hidden" 
+                   Height="310" 
+                   Width="400"
+                   HorizontalAlignment="Right" 
+                   Margin="0,20,0,0"
+                   MouseDown="Frame_MouseDown" 
+                   Navigating="Frame_Navigating"/>
+            <Button x:Name="ButtonNext"
+                    Style="{StaticResource LoginButton}" 
+                    Height="60"    
+                    Width="60"
+                    Click="ButtonNext_Click"/>
+            <Button x:Name="ButtonLogin" 
+                    Style="{StaticResource BaseTextHover}" 
+                    Content="BACK TO LOG IN" 
+                    HorizontalContentAlignment="Center" 
+                    FontFamily="{DynamicResource SourceSansPro}" 
+                    FontWeight="SemiBold" 
+                    FontSize="12" 
+                    Width="100" 
+                    Margin="0,40,0,0"
+                    Click="TextBlockLogin_Click"/>
         </StackPanel>
 
-        <TextBlock HorizontalAlignment="Left" Margin="44,585,0,0" Grid.Row="1" TextWrapping="NoWrap" Text="© 2021 FACULTI. ALL RIGHTS RESERVED." VerticalAlignment="Top" FontFamily="{DynamicResource Montserrat}" Foreground="#FFE4E4E4" FontSize="7" FontWeight="Bold"/>
-        
+        <Image x:Name="Loader" 
+               gif:ImageBehavior.AnimatedSource="/Resources/Images/loader.gif" 
+               HorizontalAlignment="Center" 
+               Visibility="Hidden" 
+               VerticalAlignment="Top" 
+               Width="60" 
+               Height="60" 
+               Margin="0,455,0,0" 
+               Grid.Row="1"/>
+
+        <TextBlock HorizontalAlignment="Left" 
+                   Margin="44,585,0,0" 
+                   Grid.Row="1" 
+                   TextWrapping="NoWrap" 
+                   Text="© 2021 FACULTI. ALL RIGHTS RESERVED." 
+                   VerticalAlignment="Top" 
+                   FontFamily="{DynamicResource Montserrat}" 
+                   Foreground="#FFE4E4E4" 
+                   FontSize="7" 
+                   FontWeight="Bold"/>
+
+
         <StackPanel x:Name="Toolbar" MouseDown="Toolbar_MouseDown" Background="White" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
             <Button x:Name="Close" Style="{StaticResource CloseButtonStyle}" Content="╳" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Close_Click"/>
             <Button x:Name="Minimize" Style="{StaticResource MinimizeButtonStyle}" Content="—" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Minimize_Click"/>
         </StackPanel>
+
+        <TextBox Text="{Binding Email, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden" TextChanged="TextBox_TextChanged"/>
     </Grid>
 </Window>

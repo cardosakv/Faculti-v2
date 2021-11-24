@@ -56,8 +56,9 @@ namespace Faculti.UI.Windows
             if (Frame.Content == _step1)
             {
                 StartLoader();
-                var isError = await _step1.CheckErrorsAsync(_signupUser);
 
+                await Task.Delay(500);
+                var isError = await _step1.CheckErrorsAsync(_signupUser);
                 if (!isError)
                 {
                     _signupUser.Type = _step1.userType;
@@ -69,8 +70,8 @@ namespace Faculti.UI.Windows
             else if (Frame.Content == _step2)
             {
                 StartLoader();
-                _tempPass = _signupUser.Password;
 
+                _tempPass = _signupUser.Password;
                 if (!_step2.CheckErrors())
                 {
                     await _step3.SendCodeToEmail(_signupUser.Email);
@@ -89,6 +90,7 @@ namespace Faculti.UI.Windows
             else if (Frame.Content == _step3 && _step3.IsCodeCorrect())
             {
                 StartLoader();
+
                 await _signupUser.AddToDatabaseAsync();
                 await Task.Delay(1000);
 
@@ -129,7 +131,12 @@ namespace Faculti.UI.Windows
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
             LoginWindow login = new();
-            _signupUser.DbConnection.Close();
+
+            if (_signupUser.DbConnection != null)
+            {
+                _signupUser.DbConnection.Close();
+            }
+
             this.Close();
             login.Show();
         }
