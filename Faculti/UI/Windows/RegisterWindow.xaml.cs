@@ -87,17 +87,23 @@ namespace Faculti.UI.Windows
                 this.Close();
                 login.Show();
             }
-            else if (Frame.Content == _step3 && _step3.IsCodeCorrect())
+            else if (Frame.Content == _step3)
             {
                 StartLoader();
 
-                await _signupUser.AddToDatabaseAsync();
-                await Task.Delay(1000);
+                await Task.Delay(500);
+                var isCorrect = _step3.IsCodeCorrect();
 
-                _isSucess = true;
-                Frame.Navigate(_step3);
-                _step3.SetSuccessMessage();
-                ShowSuccessUI();
+                if (isCorrect)
+                {
+                    await Task.Delay(500);
+                    await _signupUser.AddToDatabaseAsync();
+
+                    _isSucess = true;
+                    Frame.Navigate(_step3);
+                    _step3.SetSuccessMessage();
+                    ShowSuccessUI();
+                }
 
                 StopLoader();
             }
