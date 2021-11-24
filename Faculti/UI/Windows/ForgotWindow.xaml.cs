@@ -61,6 +61,7 @@ namespace Faculti.UI.Windows
             {
                 StartLoader();
 
+                await Task.Delay(500);
                 var isError = await _step1.CheckErrorsAsync(_forgotUser);
                 if (!isError)
                 {
@@ -70,10 +71,15 @@ namespace Faculti.UI.Windows
 
                 StopLoader();
             }
-            else if (Frame.Content == _step2 && _step2.IsCodeCorrect())
+            else if (Frame.Content == _step2)
             {
                 StartLoader();
-                Frame.Navigate(_step3);
+
+                await Task.Delay(500);
+                var isCorrect = _step2.IsCodeCorrect();
+
+                if (isCorrect) Frame.Navigate(_step3);
+
                 StopLoader();
             }
             else if (Frame.Content == _step3 && _isSucess)
@@ -87,9 +93,9 @@ namespace Faculti.UI.Windows
             {
                 StartLoader();
 
-                await Task.Delay(1000);
                 if (!_step3.CheckErrors())
                 {
+                    await Task.Delay(1000);
                     await _forgotUser.UpdatePassword();
                     Frame.Navigate(_step3);
                     _step3.SetSuccessMessage();
@@ -171,7 +177,18 @@ namespace Faculti.UI.Windows
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             _step1.SetEmailRegisteredError(false);
+        }        
+
+        private void WindowLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                FocusManager.SetFocusedElement(this, this);
+                ButtonNext.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            }
         }
         #endregion
+
+
     }
 }

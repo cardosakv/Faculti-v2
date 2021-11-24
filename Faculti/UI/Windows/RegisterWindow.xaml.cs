@@ -60,6 +60,7 @@ namespace Faculti.UI.Windows
                 var isError = await _step1.CheckErrorsAsync(_signupUser);
                 if (!isError)
                 {
+                    await Task.Delay(500);
                     _signupUser.Type = _step1.userType;
                     Frame.Navigate(_step2);
                 }

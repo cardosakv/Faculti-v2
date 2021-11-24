@@ -36,8 +36,8 @@
                    Width="330" 
                    FontSize="14"/>
         <Controls:BaseTextBox2 x:Name="TextBoxCode" 
-                               HorizontalAlignment="Left" 
-                               Margin="26,125,0,0" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,125,5,0" 
                                ErrorText="Code is invalid." 
                                VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Center" 

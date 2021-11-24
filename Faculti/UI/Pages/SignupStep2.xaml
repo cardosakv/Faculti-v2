@@ -14,7 +14,7 @@
     
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="123,55,0,0" TextWrapping="NoWrap" Text="Provide a password" VerticalAlignment="Top" FontFamily="{StaticResource SourceSansPro}" Foreground="{DynamicResource GrayDark}" FontSize="16" FontWeight="SemiBold" Width="134"/>
-        <Controls:PasswordTextBox x:Name="TextBoxPassword1" Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ErrorText="Minimum of 8 characters." Margin="36,124,42,25"/>
+        <Controls:PasswordTextBox x:Name="TextBoxPassword1" Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" ErrorText="Minimum of 8 characters." Margin="36,124,42,25"/>
         <Controls:ConfirmPasswordTextBox x:Name="TextBoxPassword2" PasswordToConfirm="{Binding Password, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="36,209,42,0"/>
         <TextBlock HorizontalAlignment="Left" Margin="85,80,0,0" TextWrapping="NoWrap" Text="It should be at least 8 characters long." VerticalAlignment="Top" FontFamily="{StaticResource SourceSansPro}" Foreground="{DynamicResource GrayRegular}" FontWeight="Regular" Width="219" FontSize="14"/>
     </Grid>

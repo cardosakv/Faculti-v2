@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         Height="650" 
         Width="530"
-        MouseDown="WindowLogin_MouseDown" Loaded="WindowLogin_Loaded">
+        MouseDown="WindowLogin_MouseDown" Loaded="WindowLogin_Loaded" KeyDown="WindowLogin_KeyDown">
 
     <Window.Resources>
         <Style x:Key="MinimizeButtonStyle" TargetType="{x:Type Button}">
