@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com" 
         mc:Ignorable="d"
         Title="Faculti - Register" 
         WindowStyle="None"
@@ -72,6 +72,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
+        
         <Rectangle HorizontalAlignment="Left" Height="650" VerticalAlignment="Top" Width="525" RadiusX="0" RadiusY="0" Fill="#FFF2F7FF" Grid.RowSpan="2"/>
         <Image HorizontalAlignment="Left" Height="466" VerticalAlignment="Top" Width="441" Source="/Resources/Images/create-account-bg.png" Stretch="Uniform" StretchDirection="Both" Margin="24,8,0,0" Grid.Row="1"/>
         <TextBlock HorizontalAlignment="Left" Margin="44,461,0,0" Grid.Row="1" TextWrapping="Wrap" Text="CREATE AN ACCOUNT" VerticalAlignment="Top" Foreground="{DynamicResource BlueDark}" FontFamily="{DynamicResource Montserrat}" FontWeight="Black" FontSize="40" Width="305" FontStretch="Normal" Height="76" LineHeight="40" LineStackingStrategy="BlockLineHeight"/>
@@ -83,6 +84,7 @@
         </StackPanel>
         
         <Image HorizontalAlignment="Left" Height="26" Margin="44,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="32" Source="/Resources/Images/faculti-logo-black-50px.png"/>
+        
         <StackPanel Background="Transparent" x:Name="Toolbar" MouseDown="Toolbar_MouseDown" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" OpacityMask="Black">
             <Button x:Name="Close" Style="{StaticResource CloseButtonStyle}" Content="╳" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Close_Click"/>
             <Button x:Name="Minimize" Style="{StaticResource MinimizeButtonStyle}" Content="—" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Minimize_Click"/>
@@ -93,10 +95,12 @@
         <Button x:Name="ButtonLogin" Style="{StaticResource BaseTextHover}" Content="ALREADY HAVE AN ACCOUNT?" HorizontalAlignment="Left" Margin="638,573,0,0" Grid.Row="1" VerticalAlignment="Top" Width="182" FontWeight="SemiBold" Click="ButtonLogin_Click" FontFamily="{DynamicResource SourceSansPro}"/>
         <Button x:Name="ButtonPrevious" Style="{StaticResource BaseTextHover2}" Content="🡨" HorizontalAlignment="Left" Margin="557,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="24" FontWeight="SemiBold" Click="ButtonPrevious_Click" FontFamily="Agency FB" FontSize="18" IsCancel="True"/>
         <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden" HorizontalAlignment="Left" Margin="264,417,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        
         <StackPanel x:Name="PanelEmailAvailableError" Visibility="Hidden" Orientation="Horizontal" Margin="566,428,166,172" Grid.Row="1">
             <TextBlock Text="🔸" Foreground="{StaticResource ErrorRegular}" FontSize="10" Height="16" Width="13" Margin="12,0,0,0"/>
             <TextBlock Text="Email already registered." FontFamily="{StaticResource Montserrat}" VerticalAlignment="Center" Margin="3,0,0,0" FontWeight="SemiBold" Foreground="{StaticResource ErrorRegular}" FontSize="10" />
         </StackPanel>
-        <Image x:Name="Loader" HorizontalAlignment="Left" Visibility="Hidden" VerticalAlignment="Top" Width="60" Height="60" gif:ImageBehavior.AnimatedSource="/Resources/Images/loader.gif" Stretch="Uniform" StretchDirection="Both" Margin="700,475,0,0" Grid.Row="1"/>
+
+        <Image x:Name="Loader" gif:ImageBehavior.AnimatedSource="/Resources/Images/loader.gif" HorizontalAlignment="Left" Visibility="Hidden" VerticalAlignment="Top" Width="60" Height="60" Margin="700,475,0,0" Grid.Row="1"/>
     </Grid>
 </Window>

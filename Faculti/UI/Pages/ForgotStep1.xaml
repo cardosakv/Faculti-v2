@@ -1,0 +1,41 @@
+﻿<Page x:Class="Faculti.UI.Pages.ForgotStep1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Faculti.UI.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="310" 
+      d:DesignWidth="380"
+      Background="White"
+      Title="ForgotStep1"
+      MouseDown="Page_MouseDown">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" 
+                   Margin="0,55,0,0" 
+                   TextWrapping="NoWrap" 
+                   Text="Find your account" 
+                   VerticalAlignment="Top" 
+                   FontFamily="{StaticResource SourceSansPro}" 
+                   Foreground="{DynamicResource GrayDark}" 
+                   FontSize="16" 
+                   FontWeight="SemiBold" 
+                   Width="124"/>
+        <TextBlock HorizontalAlignment="Center" 
+                   Margin="0,80,0,0" 
+                   TextWrapping="NoWrap" 
+                   Text="Enter your email address that you used to register." 
+                   VerticalAlignment="Top" 
+                   FontFamily="{StaticResource SourceSansPro}" 
+                   Foreground="{DynamicResource GrayRegular}" 
+                   FontWeight="Regular" 
+                   Width="291" 
+                   FontSize="14"/>
+        <Controls:BaseTextBox x:Name="TextBoxEmail" 
+                              HorizontalAlignment="Center"
+                              Title="EMAIL"
+                              ValidationType="Email"
+                              Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ErrorText="Invalid email format." Margin="0,125,0,100"/>
+    </Grid>
+</Page>
