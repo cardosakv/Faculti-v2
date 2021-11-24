@@ -82,6 +82,13 @@ namespace Faculti.UI.Windows
             this.Close();
             register.Show();
         }
+
+        private void TextBlockForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            ForgotWindow forgot = new();
+            this.Close();
+            forgot.Show();
+        }
         #endregion
     }
 }

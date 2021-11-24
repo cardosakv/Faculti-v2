@@ -93,6 +93,7 @@
     <None Remove="Resources\Images\loader.gif" />
     <None Remove="Resources\Images\password-hide.png" />
     <None Remove="Resources\Images\password-show.png" />
+    <None Remove="Resources\Images\password-success.png" />
     <None Remove="Resources\Images\splashscreen-bg.png" />
     <None Remove="Resources\Images\splashscreen-img.png" />
     <None Remove="UI\Windows\create-account-bg.png" />
@@ -124,6 +125,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetBrowser.Wpf" Version="2.10.0" />
+    <PackageReference Include="LoadingIndicators.WPF.Core" Version="1.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
     <PackageReference Include="NLog" Version="4.7.12" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
@@ -245,12 +248,15 @@
     <Resource Include="Resources\Images\create-account-bg.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\password-success.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <SplashScreen Include="Resources\Images\splashscreen-img.png">
+    <Resource Include="Resources\Images\splashscreen-img.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </SplashScreen>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -277,6 +283,9 @@
     <Compile Update="UI\Pages\SignupStep2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UI\Windows\ForgotWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -300,6 +309,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UI\Pages\SignupStep2.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UI\Windows\ForgotWindow.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

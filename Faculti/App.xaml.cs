@@ -14,5 +14,12 @@ namespace Faculti
     /// </summary>
     public partial class App : Application
     {
+        private readonly SplashScreen _splash = new("/Resources/Images/splashscreen-img.png");
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            _splash.Show(false, false);
+            _splash.Close(TimeSpan.FromMilliseconds(500));
+        }
     }
 }

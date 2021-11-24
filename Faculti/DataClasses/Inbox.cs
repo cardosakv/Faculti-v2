@@ -33,7 +33,7 @@ namespace Faculti.DataClasses
             get { return _lastMessage; }
             set
             {
-                _lastMessage = value;
+                _lastMessage = value.Trim();
                 OnPropertyChanged("LastMessage");
             }
         }
