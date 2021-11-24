@@ -58,8 +58,7 @@ namespace Faculti.UI.Windows
                 StartLoader();
 
                 await Task.Delay(500);
-                var isError = await _step1.CheckErrorsAsync(_signupUser);
-                if (!isError)
+                if (!await _step1.CheckErrorsAsync(_signupUser))
                 {
                     _signupUser.Type = _step1.userType;
                     Frame.Navigate(_step2);
@@ -92,9 +91,7 @@ namespace Faculti.UI.Windows
                 StartLoader();
 
                 await Task.Delay(500);
-                var isCorrect = _step3.IsCodeCorrect();
-
-                if (isCorrect)
+                if (_step3.IsCodeCorrect())
                 {
                     await Task.Delay(500);
                     await _signupUser.AddToDatabaseAsync();
