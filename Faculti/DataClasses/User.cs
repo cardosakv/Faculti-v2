@@ -199,6 +199,26 @@ namespace Faculti.DataClasses
         }
 
         /// <summary>
+        /// Updates the password of the user to the database.
+        /// </summary>
+        public async Task UpdatePassword()
+        {
+            var cmdText = $@"UPDATE USERS SET PASSWORD_IN_HASH = '{PasswordInHash}' WHERE EMAIL = '{Email}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+            await Task.Run(() =>
+            {
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
+        }
+
+        /// <summary>
         /// Adds the user to the database.
         /// </summary>
         public async Task AddToDatabaseAsync()
