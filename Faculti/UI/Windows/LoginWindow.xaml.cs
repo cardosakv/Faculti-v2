@@ -30,18 +30,31 @@ namespace Faculti.UI.Windows
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private User loginUser;
+        private User _loginUser = new();
         private bool _isKeepSignedIn;
 
-        private void ButtonLogin_Click(object sender, RoutedEventArgs e)
+        private async void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            // Code login logic here
+            var isMatched = await _loginUser.HaveCredentialsMatchedAsync();
+            if (isMatched)
+            {
+                HomeWindow homeWindow = new();
+                this.Close();
+                homeWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Not found");
+            }
+
+            //kvcards26@gmail.com
+            //12345678
         }
 
-        private void WindowLogin_Loaded(object sender, RoutedEventArgs e)
+        private async void WindowLogin_Loaded(object sender, RoutedEventArgs e)
         {
-            loginUser = new();
-            DataContext = loginUser;
+            DataContext = _loginUser;
+            await _loginUser.CreateConnection();
         }
 
 
@@ -79,5 +92,15 @@ namespace Faculti.UI.Windows
             register.Show();
         }
         #endregion
+
+        private void ButtonParent_Checked(object sender, RoutedEventArgs e)
+        {
+            _loginUser.Type = UserType.Parent;
+        }
+
+        private void ButtonTeacher_Checked(object sender, RoutedEventArgs e)
+        {
+            _loginUser.Type = UserType.Teacher;
+        }
     }
 }
