@@ -54,6 +54,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Fonts\Montserrat\Montserrat-Black.ttf" />
     <None Remove="Resources\Fonts\Montserrat\Montserrat-BlackItalic.ttf" />
     <None Remove="Resources\Fonts\Montserrat\Montserrat-Bold.ttf" />
@@ -84,7 +88,32 @@
     <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-Regular.ttf" />
     <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-SemiBold.ttf" />
     <None Remove="Resources\fonts\Source_Sans_Pro\SourceSansPro-SemiBoldItalic.ttf" />
+    <None Remove="Resources\Icons\backpack-hover.png" />
+    <None Remove="Resources\Icons\backpack-idle.png" />
+    <None Remove="Resources\Icons\backpack-pressed.png" />
+    <None Remove="Resources\Icons\calendar-hover.png" />
+    <None Remove="Resources\Icons\calendar-idle.png" />
+    <None Remove="Resources\Icons\calendar-pressed.png" />
+    <None Remove="Resources\Icons\chat-hover.png" />
+    <None Remove="Resources\Icons\chat-idle.png" />
+    <None Remove="Resources\Icons\chat-pressed.png" />
+    <None Remove="Resources\Icons\classes-hover.png" />
+    <None Remove="Resources\Icons\classes-idle.png" />
+    <None Remove="Resources\Icons\classes-pressed.png" />
+    <None Remove="Resources\Icons\feed-hover.png" />
+    <None Remove="Resources\Icons\feed-idle.png" />
+    <None Remove="Resources\Icons\feed-pressed.png" />
+    <None Remove="Resources\Icons\grades-hover.png" />
+    <None Remove="Resources\Icons\grades-idle.png" />
+    <None Remove="Resources\Icons\grades-pressed.png" />
+    <None Remove="Resources\Icons\home-hover.png" />
+    <None Remove="Resources\Icons\home-idle.png" />
+    <None Remove="Resources\Icons\home-pressed.png" />
+    <None Remove="Resources\Icons\students-hover.png" />
+    <None Remove="Resources\Icons\students-idle.png" />
+    <None Remove="Resources\Icons\students-pressed.png" />
     <None Remove="Resources\Images\cheers.png" />
+    <None Remove="Resources\Images\default_profile.jpg" />
     <None Remove="Resources\Images\faculti-logo-black-50px.png" />
     <None Remove="Resources\Images\faculti-logo-black-small.png" />
     <None Remove="Resources\Images\faculti-logo-black.png" />
@@ -97,6 +126,17 @@
     <None Remove="Resources\Images\splashscreen-bg.png" />
     <None Remove="Resources\Images\splashscreen-img.png" />
     <None Remove="UI\Windows\create-account-bg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -125,7 +165,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DotNetBrowser.Wpf" Version="2.10.0" />
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="LoadingIndicators.WPF.Core" Version="1.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
     <PackageReference Include="NLog" Version="4.7.12" />
@@ -226,9 +273,38 @@
     <Resource Include="Resources\fonts\Source_Sans_Pro\SourceSansPro-SemiBoldItalic.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Icons\backpack-hover.png" />
+    <Resource Include="Resources\Icons\backpack-idle.png" />
+    <Resource Include="Resources\Icons\backpack-pressed.png" />
+    <Resource Include="Resources\Icons\calendar-hover.png" />
+    <Resource Include="Resources\Icons\calendar-idle.png" />
+    <Resource Include="Resources\Icons\calendar-pressed.png" />
+    <Resource Include="Resources\Icons\chat-hover.png" />
+    <Resource Include="Resources\Icons\chat-idle.png" />
+    <Resource Include="Resources\Icons\chat-pressed.png" />
+    <Resource Include="Resources\Icons\classes-hover.png" />
+    <Resource Include="Resources\Icons\classes-idle.png" />
+    <Resource Include="Resources\Icons\classes-pressed.png" />
+    <Resource Include="Resources\Icons\feed-hover.png" />
+    <Resource Include="Resources\Icons\feed-idle.png" />
+    <Resource Include="Resources\Icons\feed-pressed.png" />
+    <Resource Include="Resources\Icons\grades-hover.png" />
+    <Resource Include="Resources\Icons\grades-idle.png" />
+    <Resource Include="Resources\Icons\grades-pressed.png" />
+    <Resource Include="Resources\Icons\home-hover.png" />
+    <Resource Include="Resources\Icons\home-idle.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Icons\home-pressed.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Icons\students-hover.png" />
+    <Resource Include="Resources\Icons\students-idle.png" />
+    <Resource Include="Resources\Icons\students-pressed.png" />
     <Resource Include="Resources\Images\cheers.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\default_profile.jpg" />
     <Resource Include="Resources\Images\faculti-logo-black-50px.png" />
     <Resource Include="Resources\Images\faculti-logo-black-small.png" />
     <Resource Include="Resources\Images\faculti-logo-black.png" />
@@ -260,12 +336,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </ApplicationDefinition>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -293,6 +363,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

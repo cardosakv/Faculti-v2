@@ -6,19 +6,24 @@
         <FontFamily x:Key="Montserrat">pack://application:,,,/Resources/Fonts/Montserrat/#Montserrat</FontFamily>
         <FontFamily x:Key="SourceSansPro">pack://application:,,,/Resources/fonts/Source_Sans_Pro/#Source Sans Pro</FontFamily>
         <Brush x:Key="White">#FFFFFF</Brush>
-        <Brush x:Key="FacultiBlue">#19C0FF</Brush>
-        <Brush x:Key="FacultiBlueHover">#07afed</Brush>
-        <Brush x:Key="FacultiBluePressed">#07a0d9</Brush>
-        <Color x:Key="FacultiBlueColor">#17abe3</Color>
+        <Brush x:Key="MainColor">#0db14b</Brush>
+        <Brush x:Key="MainColorHover">#03a742</Brush>
+        <Brush x:Key="MainColorPressed">#009d37</Brush>
+        <!-->
+        <Brush x:Key="MainColorHover">#1c528b</Brush>
+        <Brush x:Key="MainColorPressed">#124881</Brush>
+        <!-->
+        <Brush x:Key="MainColorDark">#083e77</Brush>
         <Brush x:Key="BlueDark">#231F20</Brush>
         <Brush x:Key="BlueMedium">#404040</Brush>
-        <Brush x:Key="BlueFaint">#404959</Brush>
+        <Brush x:Key="BlueFaint">#0F1419</Brush>
         <Brush x:Key="RedIdle">#FF2525</Brush>
         <Brush x:Key="RedPressed">#C91A1A</Brush>
         <Brush x:Key="BlueGray">#313F4F</Brush>
         <Brush x:Key="GrayDark">#98a3ab</Brush>
         <Brush x:Key="GrayRegular">#c4c9cf</Brush>
         <Brush x:Key="GrayMedium">#e9edf1</Brush>
+        <Brush x:Key="GrayLow">#fafcff</Brush>
         <Brush x:Key="GrayFaint">#F0F2F5</Brush>
         <Brush x:Key="ErrorFaint">#ffe6e6</Brush>
         <Brush x:Key="ErrorMedium">#fab9d0</Brush>

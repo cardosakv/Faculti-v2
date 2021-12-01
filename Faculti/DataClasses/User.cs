@@ -17,30 +17,20 @@ namespace Faculti.DataClasses
 
         public User(UserType type, string? email, string? phoneNumberInHash, string password)
         {
-            _type = type;
+            Type = type;
             _email = email;
             _phoneNumberInHash = phoneNumberInHash;
             _password = password;
         }
 
-        private int _id;
-        public int Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
+        public int Id { get; set; }
 
-        private UserType _type;
-        public UserType Type
-        {
-            get { return _type; }
-            set { _type = value; }
-        }
+        public UserType Type { get; set; }
 
         private string _email;
         public string Email
         {
-            get { return _email; }
+            get => _email;
             set 
             { 
                 _email = value.Trim();
@@ -51,7 +41,7 @@ namespace Faculti.DataClasses
         private string _passwordInHash;
         public string PasswordInHash
         {
-            get { return _passwordInHash; }
+            get => _passwordInHash;
             set
             {
                 _passwordInHash = value;
@@ -63,7 +53,7 @@ namespace Faculti.DataClasses
         private string _password;
         public string Password
         {
-            get { return _password; }
+            get => _password;
             set
             {
                 _password = value;
@@ -75,7 +65,7 @@ namespace Faculti.DataClasses
         private string _firstName;
         public string FirstName
         {
-            get { return _firstName; }
+            get => _firstName;
             set
             {
                 _firstName = value.Trim();
@@ -87,7 +77,7 @@ namespace Faculti.DataClasses
         private string _lastName;
         public string LastName
         {
-            get { return _lastName; }
+            get => _lastName;
             set 
             { 
                 _lastName = value.Trim();
@@ -98,17 +88,14 @@ namespace Faculti.DataClasses
 
         public string FullName
         {
-            get { return $"{_firstName} {_lastName}"; }
-            set
-            {
-                OnPropertyChanged("FullName");
-            }
+            get => $"{_firstName} {_lastName}";
+            set => OnPropertyChanged("FullName");
         }
 
         private string _phoneNumberInHash;
         public string PhoneNumberInHash
         {
-            get { return _phoneNumberInHash; }
+            get => _phoneNumberInHash;
             set
             {
                 _phoneNumberInHash = value;
@@ -120,7 +107,7 @@ namespace Faculti.DataClasses
         private string _phoneNumber;
         public string PhoneNumber
         {
-            get { return _phoneNumber; }
+            get => _phoneNumber;
             set 
             {
                 _phoneNumber = value;
@@ -132,7 +119,7 @@ namespace Faculti.DataClasses
         private Image _picture;
         public Image Picture
         {
-            get { return _picture; }
+            get => _picture;
             set 
             { 
                 _picture = value; 
@@ -143,7 +130,7 @@ namespace Faculti.DataClasses
         private DateTime _lastOnline;
         public DateTime LastOnline
         {
-            get { return _lastOnline; }
+            get => _lastOnline;
             set 
             { 
                 _lastOnline = value;
@@ -154,7 +141,7 @@ namespace Faculti.DataClasses
         private Status _status;
         public Status Status
         {
-            get { return _status; }
+            get => _status;
             set
             {
                 _status = value;
@@ -163,17 +150,12 @@ namespace Faculti.DataClasses
             }
         }
 
-        private DateTime _lastPicChange;
-        public DateTime LastPicChange
-        {
-            get { return _lastPicChange; }
-            set { _lastPicChange = value; }
-        }
+        public DateTime LastPicChange { get; set; }
 
         private IDbConnection _dbConnection;
         public IDbConnection DbConnection
         {
-            get { return _dbConnection; }
+            get => _dbConnection;
             set 
             {
                 _dbConnection.Close();
@@ -249,7 +231,7 @@ namespace Faculti.DataClasses
             var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}'";
             using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
 
-            int records = 0;
+            var records = 0;
             await Task.Run(async () =>
             {
                 try
@@ -263,12 +245,7 @@ namespace Faculti.DataClasses
                 }
             });
 
-            if (records > 0) // there is a record containing the email
-            {
-                return true;
-            }
-
-            return false;
+            return records > 0;
         }
 
         /// <summary>
@@ -282,7 +259,7 @@ namespace Faculti.DataClasses
             var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}'";
             using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
 
-            int records = 0;
+            var records = 0;
             await Task.Run(() => 
             {
                 try
@@ -295,12 +272,7 @@ namespace Faculti.DataClasses
                 }
             });
 
-            if (records > 0) // there is a record 
-            {
-                return true;
-            }
-
-            return false;
+            return records > 0;
         }
 
         /// <summary>
@@ -394,9 +366,9 @@ namespace Faculti.DataClasses
         #region PropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void OnPropertyChanged(string propertyname)
+        private void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }
