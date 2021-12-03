@@ -9,6 +9,10 @@
     <ApplicationIcon>Resources\Icons\faculti-icon.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="DataClasses\**" />
     <Compile Remove="Helpers\**" />
@@ -113,6 +117,7 @@
     <None Remove="Resources\Icons\students-idle.png" />
     <None Remove="Resources\Icons\students-pressed.png" />
     <None Remove="Resources\Images\cheers.png" />
+    <None Remove="Resources\Images\close.png" />
     <None Remove="Resources\Images\default_profile.jpg" />
     <None Remove="Resources\Images\faculti-logo-black-50px.png" />
     <None Remove="Resources\Images\faculti-logo-black-small.png" />
@@ -120,9 +125,17 @@
     <None Remove="Resources\Images\faculti-logo.png" />
     <None Remove="Resources\Images\faculti-logotype.png" />
     <None Remove="Resources\Images\loader.gif" />
+    <None Remove="Resources\Images\minimize.png" />
+    <None Remove="Resources\Images\new-notif-hover.png" />
+    <None Remove="Resources\Images\new-notif-idle.png" />
+    <None Remove="Resources\Images\no-notif-hover.png" />
+    <None Remove="Resources\Images\no-notif-idle.png" />
     <None Remove="Resources\Images\password-hide.png" />
     <None Remove="Resources\Images\password-show.png" />
     <None Remove="Resources\Images\password-success.png" />
+    <None Remove="Resources\Images\restore.png" />
+    <None Remove="Resources\Images\settings-hover.png" />
+    <None Remove="Resources\Images\settings-idle.png" />
     <None Remove="Resources\Images\splashscreen-bg.png" />
     <None Remove="Resources\Images\splashscreen-img.png" />
     <None Remove="UI\Windows\create-account-bg.png" />
@@ -130,13 +143,6 @@
 
   <ItemGroup>
     <Page Remove="App.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -162,12 +168,6 @@
 
   <ItemGroup>
     <Content Include="Resources\Icons\faculti-icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </ApplicationDefinition>
   </ItemGroup>
 
   <ItemGroup>
@@ -304,6 +304,9 @@
     <Resource Include="Resources\Images\cheers.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Images\default_profile.jpg" />
     <Resource Include="Resources\Images\faculti-logo-black-50px.png" />
     <Resource Include="Resources\Images\faculti-logo-black-small.png" />
@@ -313,6 +316,21 @@
     </Resource>
     <Resource Include="Resources\Images\faculti-logotype.png" />
     <Resource Include="Resources\Images\loader.gif">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\minimize.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\new-notif-hover.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\new-notif-idle.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\no-notif-hover.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\no-notif-idle.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\password-hide.png">
@@ -327,12 +345,27 @@
     <Resource Include="Resources\Images\password-success.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\restore.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\settings-hover.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\settings-idle.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Images\splashscreen-img.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ApplicationDefinition>
   </ItemGroup>
 
   <ItemGroup>

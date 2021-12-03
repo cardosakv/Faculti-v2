@@ -40,6 +40,9 @@ namespace Faculti.UI.Windows
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
+            HomeWindow home = new();
+            this.Close();
+            home.Show();
         }
 
         private void WindowLogin_Loaded(object sender, RoutedEventArgs e)

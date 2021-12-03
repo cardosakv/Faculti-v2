@@ -81,7 +81,7 @@ namespace Faculti.Helpers
         public static PasswordStrength GetPasswordStrength(string password)
         {
             int score = 0;
-            if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(password.Trim())) return PasswordStrength.Blank;
+            if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(password)) return PasswordStrength.Blank;
             if (HasMinimumLength(password, 5)) score++;
             if (HasMinimumLength(password, 8)) score++;
             if (HasUpperCaseLetter(password) && HasLowerCaseLetter(password)) score++;

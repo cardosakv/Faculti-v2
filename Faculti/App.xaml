@@ -54,7 +54,7 @@
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource BlueMedium}"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -81,7 +81,7 @@
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="Background" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="Background" Value="{StaticResource MainColor}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -92,9 +92,9 @@
         <Style x:Key="LoginButton" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="{StaticResource FacultiBlue}"/>
+            <Setter Property="Background" Value="{StaticResource MainColor}"/>
             <Setter Property="Foreground" Value="{StaticResource White}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Content" Value="🡢"/>
             <Setter Property="FontSize" Value="30"/>
@@ -110,12 +110,12 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="BorderThickness" Value="0"/>
-                                <Setter Property="Background" Value="{StaticResource FacultiBlueHover}"/>
+                                <Setter Property="Background" Value="{StaticResource MainColorHover}"/>
                             </Trigger>
                             <Trigger Property="IsMouseCaptured" Value="True">
                                 <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="BorderThickness" Value="0"/>
-                                <Setter Property="Background" Value="{StaticResource FacultiBluePressed}"/>
+                                <Setter Property="Background" Value="{StaticResource MainColorPressed}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -134,10 +134,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
                             </Trigger>
                             <Trigger Property="IsMouseCaptured" Value="True">
-                                <Setter Property="Foreground" Value="{StaticResource FacultiBluePressed}"/>
+                                <Setter Property="Foreground" Value="{StaticResource MainColorPressed}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -168,7 +168,7 @@
                                 <Setter Property="Background" Value="{StaticResource GrayMedium}"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
                                 <Setter Property="Background" Value="White"/>
                             </Trigger>
 
@@ -250,7 +250,7 @@
                                 <Setter Property="Background" Value="{StaticResource GrayMedium}"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
                                 <Setter Property="Background" Value="White"/>
                             </Trigger>
 
@@ -320,10 +320,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
                             </Trigger>
                             <Trigger Property="IsMouseCaptured" Value="True">
-                                <Setter Property="Foreground" Value="{StaticResource FacultiBluePressed}"/>
+                                <Setter Property="Foreground" Value="{StaticResource MainColorPressed}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
