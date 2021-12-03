@@ -35,7 +35,7 @@
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource BlueMedium}"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource FacultiBlue}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

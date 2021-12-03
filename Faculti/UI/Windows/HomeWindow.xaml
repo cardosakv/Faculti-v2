@@ -1,0 +1,655 @@
+﻿<Window x:Class="Faculti.UI.Windows.HomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        WindowStyle="None"
+        WindowState="Maximized"
+        ResizeMode="CanResize"
+        MinHeight="440" 
+        MinWidth="720"
+        MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}" 
+        Height="575" 
+        Width="870">
+
+    <Window.Resources>
+        <Style x:Key="NavKeys" TargetType="fa:FontAwesome">
+            <Setter Property="Foreground" Value="#c9f0ff"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ToolbarDate" TargetType="{x:Type StackPanel}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource MainColorHover}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="NotifButton" TargetType="Image">
+            <Setter Property="Source" Value="/Resources/Images/no-notif-idle.png"/>
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+            <Setter Property="Width" Value="33"/>
+            <Setter Property="Height" Value="33"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Stretch" Value="UniformToFill"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=NotifGrid, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Source" Value="/Resources/Images/no-notif-hover.png"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SettingsButton" TargetType="Image">
+            <Setter Property="Source" Value="/Resources/Images/settings-idle.png"/>
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Stretch" Value="UniformToFill"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=SettingsGrid, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Source" Value="/Resources/Images/settings-hover.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=SettingsGrid, Path=IsMouseCaptured}" Value="True">
+                    <Setter Property="Source" Value="/Resources/Images/settings-idle.png"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ProfileButton" TargetType="{x:Type Grid}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource MainColorHover}"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding ElementName=ButtonProfile, Path=IsMouseCaptured}" Value="True">
+                    <Setter Property="Background" Value="{StaticResource MainColorPressed}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="MinMaxButton" TargetType="{x:Type Grid}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource MainColorHover}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="CloseButton" TargetType="{x:Type Grid}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+            <Setter Property="Width" Value="43"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource RedPressed}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TabsButton" TargetType="{x:Type RadioButton}">
+            <Setter Property="Margin" Value="6,5,10,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Padding="15,0,0,0" 
+                                CornerRadius="25"
+                                BorderThickness="0" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource GrayMedium}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="{StaticResource MainColor}" Grid.Row="0" Grid.Column="0" MouseDown="Grid_MouseDown_3">
+            <StackPanel HorizontalAlignment="Left"
+                        Height="50"
+                        Orientation="Horizontal">
+                <fa:FontAwesome Icon="AngleLeft"
+                                Style="{StaticResource NavKeys}"
+                                FontSize="20"
+                                Width="30"  
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                Margin="5,0,0,2"/>
+                <fa:FontAwesome Icon="AngleRight"
+                                Style="{StaticResource NavKeys}"
+                                FontSize="20"
+                                Width="30"
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                Margin="0,0,0,2"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Background="{StaticResource MainColor}" Grid.Row="0" Grid.Column="1" MouseDown="Grid_MouseDown_4">
+            <StackPanel Style="{StaticResource ToolbarDate}"
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                <fa:FontAwesome Icon="CalendarOutline"
+                                RenderOptions.EdgeMode="Aliased"
+                                Foreground="White"
+                                FontSize="18"
+                                Width="30"  
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                Margin="10,0,0,0"/>
+                <TextBlock Text="Nov 21"
+                           FontFamily="{StaticResource Montserrat}"
+                           FontWeight="Light"
+                           Foreground="White"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           Margin="10,1,0,0"/>
+                <fa:FontAwesome Icon="Circle"
+                                Foreground="#c9f0ff"
+                                FontSize="3"
+                                Width="20"  
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                Margin="0,1,0,0"/>
+                <TextBlock Text="Mon"
+                           FontFamily="{StaticResource Montserrat}"
+                           FontWeight="Light"
+                           Foreground="White"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"/>
+                <fa:FontAwesome Icon="Circle"
+                                Foreground="#c9f0ff"
+                                FontSize="3"
+                                Width="20"  
+                                VerticalAlignment="Center"
+                                TextAlignment="Center"
+                                Margin="0,1,0,0"/>
+                <TextBlock Text="12:34 PM"
+                           FontFamily="{StaticResource Montserrat}"
+                           FontWeight="Light"
+                           Foreground="White"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           Margin="0,0,15,0"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Background="{StaticResource MainColor}" Grid.Row="0" Grid.Column="2">
+            <StackPanel HorizontalAlignment="Right" 
+                        Orientation="Horizontal"
+                        Height="50">
+                <Grid Background="Transparent"
+                      Cursor="Hand"
+                      Height="50"
+                      Width="50"
+                      Margin="0,0,0,0"
+                      x:Name="NotifGrid">
+                    <Image Style="{StaticResource NotifButton}"/>
+                </Grid>
+                <Grid Background="Transparent"
+                      Cursor="Hand"
+                      Height="50"
+                      Width="50"
+                      Margin="0,0,3,0"
+                      x:Name="SettingsGrid">
+                    <Image Style="{StaticResource SettingsButton}"
+                           x:Name="ButtonSettings"/>
+                </Grid>
+                <Grid Style="{StaticResource ProfileButton}"
+                      Height="50"
+                      Width="51"
+                      Margin="0,0,10,0"
+                      x:Name="ProfileGrid">
+                    <Rectangle Height="30" 
+                               Width="30"
+                               x:Name="ButtonProfile">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Style.Setters>
+                                    <Setter Property="RadiusX" Value="15"/>
+                                    <Setter Property="RadiusY" Value="15"/>
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ProfileGrid, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="RadiusX" Value="8"/>
+                                        <Setter Property="RadiusY" Value="8"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="/Resources/Images/default_profile.jpg"
+                                        RenderOptions.BitmapScalingMode="Fant"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+                <Grid Style="{StaticResource MinMaxButton}" MouseDown="Grid_MouseDown_2">
+                    <Image Source="/Resources/Images/minimize.png"
+                           RenderOptions.EdgeMode="Aliased"
+                           Height="20"
+                           Width="20"
+                           Margin="0"/>
+                </Grid>
+                <Grid Style="{StaticResource MinMaxButton}" MouseDown="Grid_MouseDown">
+                    <Image Source="/Resources/Images/restore.png"
+                           RenderOptions.EdgeMode="Aliased"
+                           Height="15"
+                           Width="15"
+                           Margin="0,0,0,1"/>
+                </Grid>
+                <Grid Style="{StaticResource CloseButton}" MouseDown="Grid_MouseDown_1">
+                    <Image Source="/Resources/Images/close.png"
+                           RenderOptions.EdgeMode="Aliased"
+                           Height="20"
+                           Width="20"
+                           Margin="0,0,0,1"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <!-- Tabs buttons -->
+        <Grid Grid.Row="1" Grid.Column="0" Background="#F7F9F9">
+            <StackPanel>
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioHome" Margin="6,10,10,0">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/home-idle.png"/>
+                                        <Setter Property="Height" Value="25"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioHome,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/home-pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Home">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioHome,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+
+                <!--
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioFeed">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/feed-idle.png"/>
+                                        <Setter Property="Height" Value="25"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioFeed,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/feed-pressed.png"/>
+                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=RadioFeed,Path=IsChecked}" Value="False"/>
+                                                    <Condition Binding="{Binding ElementName=RadioFeed,Path=IsMouseOver}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter Property="Source" Value="/Resources/Icons/feed-hover.png"/>
+                                                </MultiDataTrigger.Setters>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Feed">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioFeed,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+                -->
+
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioClasses">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/classes-idle.png"/>
+                                        <Setter Property="Height" Value="25"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioClasses,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/classes-pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Classes">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioClasses,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+
+
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioChat">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/chat-idle.png"/>
+                                        <Setter Property="Height" Value="27"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioChat,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/chat-pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Chat">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioChat,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioGrades">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/grades-idle.png"/>
+                                        <Setter Property="Height" Value="27"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioGrades,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/grades-pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Grades">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioGrades,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioCalendar">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/calendar-idle.png"/>
+                                        <Setter Property="Height" Value="25"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioCalendar,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/calendar-pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Calendar">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioCalendar,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+
+                <!--<RadioButton Style="{StaticResource TabsButton}" x:Name="RadioAss">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/backpack-idle.png"/>
+                                        <Setter Property="Height" Value="27"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioAss,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/backpack-pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Assignments">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioAss,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>-->
+
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioStudents">
+                    <RadioButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/Resources/Icons/students-idle.png"/>
+                                        <Setter Property="Height" Value="27"/>
+                                        <Setter Property="Width" Value="27"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="LowQuality"/>
+                                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioStudents,Path=IsChecked}" Value="True">
+                                                <Setter Property="Source" Value="/Resources/Icons/students-pressed.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="Students">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="20,0,0,0"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                        <Setter Property="FontWeight" Value="Medium"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=RadioStudents,Path=IsChecked}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton.Content>
+                </RadioButton>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

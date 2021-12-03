@@ -15,24 +15,14 @@ namespace Faculti.DataClasses
 {
     public class Post : DatabaseWorker, INotifyPropertyChanged
     {
-        private int _id;
-        public int Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
+        public int Id { get; set; }
 
-        private User _author;
-        public User Author
-        {
-            get { return _author; }
-            set { _author = value; }
-        }
+        public User Author { get; set; }
 
         private string _type;
         public string Type
         {
-            get { return _type; }
+            get => _type;
             set 
             { 
                 _type = value;
@@ -43,7 +33,7 @@ namespace Faculti.DataClasses
         private string _text;
         public string Text
         {
-            get { return _text; }
+            get => _text;
             set
             {
                 _text = value;
@@ -54,7 +44,7 @@ namespace Faculti.DataClasses
         private Image _image;
         public Image Image
         {
-            get { return _image; }
+            get => _image;
             set
             {
                 _image = value;
@@ -69,17 +59,12 @@ namespace Faculti.DataClasses
             set { _mentionedUser = value; }
         }
 
-        private Class _class;
-        public Class Class
-        {
-            get { return _class; }
-            set { _class = value; }
-        }
+        public Class Class { get; set; }
 
         private DateTime _createdTime;
         public DateTime CreatedTime
         {
-            get { return _createdTime; }
+            get => _createdTime;
             set 
             { 
                 _createdTime = value;
@@ -88,12 +73,7 @@ namespace Faculti.DataClasses
             }
         }
 
-        private string _elapsedTime;
-        public string ElapsedTime
-        {
-            get { return _elapsedTime; }
-            private set { _elapsedTime = value; }
-        }
+        public string ElapsedTime { get; private set; }
 
         /// <summary>
         /// Gets the general information of the post author.
@@ -104,7 +84,7 @@ namespace Faculti.DataClasses
         }
 
         /// <summary>
-        /// Poupulates the post information after setting the value of post Id.
+        /// Populates the post information after setting the value of post Id.
         /// </summary>
         public async void RetrieveInfoAsync(IDbConnection connection)
         {
@@ -114,7 +94,7 @@ namespace Faculti.DataClasses
         }
 
         /// <summary>
-        /// Poupulates the post information using the postId parameter.
+        /// Populates the post information using the postId parameter.
         /// </summary>
         public async void RetrieveInfoAsync(int postId, IDbConnection connection)
         {
@@ -133,23 +113,21 @@ namespace Faculti.DataClasses
             using IDbCommand command = Database.CreateCommand(cmdText, connection);
             using OracleDataReader reader = (OracleDataReader)command.ExecuteReader();
 
-            if (reader.Read())
-            {
-                Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
-                Type = reader.IsDBNull(1) ? null : reader.GetString(1);
-                Author.Id = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
-                Text = reader.IsDBNull(3) ? null : reader.GetString(3);
-                Class.Id = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
-                MentionedUser.Id = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
-                CreatedTime = reader.IsDBNull(6) ? DateTime.MinValue : reader.GetOracleDate(6).Value;
+            if (!reader.Read()) return;
+            
+            Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+            Type = reader.IsDBNull(1) ? null : reader.GetString(1);
+            Author.Id = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
+            Text = reader.IsDBNull(3) ? null : reader.GetString(3);
+            Class.Id = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
+            MentionedUser.Id = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
+            CreatedTime = reader.IsDBNull(6) ? DateTime.MinValue : reader.GetOracleDate(6).Value;
 
-                byte[] image = reader.IsDBNull(7) ? null : (byte[])reader["IMAGE"];
-                if (image != null)
-                {
-                    MemoryStream ms = new(image);
-                    Image = Image.FromStream(ms);
-                }
-            }
+            byte[] image = reader.IsDBNull(7) ? null : (byte[])reader["IMAGE"];
+            if (image == null) return;
+            
+            MemoryStream ms = new(image);
+            Image = Image.FromStream(ms);
         }
         #endregion
 
