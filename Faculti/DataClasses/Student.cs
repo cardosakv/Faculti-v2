@@ -158,11 +158,11 @@ namespace Faculti.DataClasses
             if (reader.Read())
             {
                 Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
-                Code = reader.IsDBNull(1) ? null : reader.GetString(1);
-                FirstName = reader.IsDBNull(2) ? null : reader.GetString(2);
-                LastName = reader.IsDBNull(3) ? null : reader.GetString(3);
+                Code = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                FirstName = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                LastName = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
                 Age = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
-                Sex = reader.IsDBNull(5) ? null : reader.GetString(5);
+                Sex = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
                 Class.Id = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
                 Parent.Id = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
                 LastPicChange = reader.IsDBNull(8) ? DateTime.MinValue : reader.GetOracleDate(8).Value;

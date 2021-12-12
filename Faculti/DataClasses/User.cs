@@ -287,11 +287,11 @@ namespace Faculti.DataClasses
                 {
                     ReadData(cmdText, DbConnection);
                 }
-                catch (Exception ex)
+                    catch (Exception ex)
                 {
                     MessageBox.Show("Database connection error.\n" + ex);
                 }
-            });
+        });
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Faculti.DataClasses
         private void ReadData(string cmdText, IDbConnection connection)
         {
             try
-            { 
+            {
                 using IDbCommand command = Database.CreateCommand(cmdText, connection);
                 using OracleDataReader reader = (OracleDataReader)command.ExecuteReader();
 
@@ -335,11 +335,11 @@ namespace Faculti.DataClasses
                 {
                     Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                     Type = reader.IsDBNull(1) ? UserType.Parent : (UserType)Enum.Parse(typeof(UserType), reader.GetString(1));
-                    FirstName = reader.IsDBNull(2) ? null : reader.GetString(2);
-                    LastName = reader.IsDBNull(3) ? null : reader.GetString(3);
-                    PhoneNumberInHash = reader.IsDBNull(4) ? null : reader.GetString(4);
-                    Email = reader.IsDBNull(5) ? null : reader.GetString(5);
-                    PasswordInHash = reader.IsDBNull(6) ? null : reader.GetString(6);
+                    FirstName = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                    LastName = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                    PhoneNumberInHash = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
+                    Email = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
+                    PasswordInHash = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
                     Status = reader.IsDBNull(7) ? Status.Invisible : (Status)Enum.Parse(typeof(Status), reader.GetString(7));
                     LastPicChange = reader.IsDBNull(9) ? DateTime.MinValue : reader.GetOracleDate(9).Value;
                     LastOnline = reader.IsDBNull(10) ? DateTime.MinValue : reader.GetOracleDate(10).Value;
@@ -360,7 +360,7 @@ namespace Faculti.DataClasses
             {
                 MessageBox.Show("Please invoke CreateConnection() first.\n" + ex);
             }
-        }
+}
         #endregion
 
         #region PropertyChanged

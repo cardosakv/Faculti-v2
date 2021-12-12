@@ -1,0 +1,53 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Faculti.UI.Pages"
+      xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="Faculti.UI.Pages.WelcomePage"
+      mc:Ignorable="d" 
+      d:DesignHeight="505" d:DesignWidth="810"
+      Title="WelcomePage" Width="810" Height="505">
+
+    <Grid Background="White" Width="810" Height="505">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="810"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="505"/>
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock x:Name="Title" 
+                       TextAlignment="Center" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,138,0,0" 
+                       TextWrapping="NoWrap" 
+                       Text="Get Started" 
+                       VerticalAlignment="Top" 
+                       FontFamily="{StaticResource SourceSansPro}" 
+                       Foreground="{DynamicResource BlueFaint}" 
+                       FontSize="20" 
+                       FontWeight="SemiBold"/>
+            <TextBlock x:Name="Caption" 
+                       Margin="0,170,0,0"
+                       TextAlignment="Center" 
+                       HorizontalAlignment="Center" 
+                       TextWrapping="NoWrap" 
+                       Text="Start creating your first class to continue." 
+                       VerticalAlignment="Top" 
+                       FontFamily="{StaticResource SourceSansPro}"
+                       Foreground="{DynamicResource GrayDark}" 
+                       FontWeight="Regular" 
+                       FontSize="16"/>
+        </Grid>
+        <Button x:Name="ButtonAdd" 
+                Content="+"
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="Light"
+                FontSize="40"
+                Style="{StaticResource LoginButton}" 
+                ToolTip="Add Class" 
+                Click="ButtonAdd_Click" 
+                Margin="375,222,375,223"/>
+    </Grid>
+</Page>

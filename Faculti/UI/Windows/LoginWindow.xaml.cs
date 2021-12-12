@@ -1,27 +1,9 @@
+using Faculti.DataClasses;
 using System;
-using System.Configuration;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
-using Faculti.Helpers;
-using Oracle.ManagedDataAccess.Client;
-
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
-using System.Data;
-using Faculti.DataClasses;
 
 namespace Faculti.UI.Windows
 {
@@ -30,29 +12,89 @@ namespace Faculti.UI.Windows
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private User loginUser;
+        private readonly User _loginUser = new();
         private bool _isKeepSignedIn;
 
         public LoginWindow()
         {
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.Email))
+            {
+                _loginUser.Email = Properties.Settings.Default.Email;
+                _loginUser.Password = Properties.Settings.Default.Password;
+
+                OpenConnection();
+                RoutedEventArgs newEventArgs = new(Button.ClickEvent);
+                ButtonLogin.RaiseEvent(newEventArgs);
+            }
+
             InitializeComponent();
+            DataContext = _loginUser;
         }
 
-        private void ButtonLogin_Click(object sender, RoutedEventArgs e)
+        private void OpenConnection()
         {
-            HomeWindow home = new();
-            this.Close();
-            home.Show();
+            _loginUser.CreateConnectionAsync().Wait();
         }
 
-        private void WindowLogin_Loaded(object sender, RoutedEventArgs e)
+        private async void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            loginUser = new();
-            DataContext = loginUser;
+            ErrorMessage.Visibility = Visibility.Hidden;
+
+            StartLoader();
+
+            if (await _loginUser.HaveCredentialsMatchedAsync())
+            {
+                if (_isKeepSignedIn)
+                {
+                    SaveCredentials();
+                }
+                else
+                {
+                    RemoveCredentials();
+                }
+
+                HomeWindow home = new(_loginUser);
+                this.Close();
+                home.Show();
+            }
+            else
+            {
+                ErrorMessage.Visibility = Visibility.Visible;
+            }
+
+            StopLoader();
         }
 
+        private void SaveCredentials()
+        {
+            Properties.Settings.Default.Email = _loginUser.Email;
+            Properties.Settings.Default.Password = _loginUser.Password;
+        }
+
+        private void RemoveCredentials()
+        {
+            Properties.Settings.Default.Email = string.Empty;
+            Properties.Settings.Default.Password = string.Empty;
+        }
+
+        private async void WindowLogin_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _loginUser.CreateConnectionAsync();
+        }
 
         #region UI code behind
+        private void StartLoader()
+        {
+            Loader.Visibility = Visibility.Visible;
+            ButtonLogin.Visibility = Visibility.Hidden;
+        }
+
+        private void StopLoader()
+        {
+            Loader.Visibility = Visibility.Hidden;
+            ButtonLogin.Visibility = Visibility.Visible;
+        }
+
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -60,6 +102,11 @@ namespace Faculti.UI.Windows
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            if (_loginUser.DbConnection != null)
+            {
+                _loginUser.DbConnection.Close();
+            }
+
             Environment.Exit(0);
         }
 
@@ -82,6 +129,7 @@ namespace Faculti.UI.Windows
         private void TextBlockCreateAccount_Click(object sender, RoutedEventArgs e)
         {
             RegisterWindow register = new();
+            if (_loginUser.DbConnection != null) _loginUser.DbConnection.Close();
             this.Close();
             register.Show();
         }
@@ -89,9 +137,25 @@ namespace Faculti.UI.Windows
         private void TextBlockForgotPassword_Click(object sender, RoutedEventArgs e)
         {
             ForgotWindow forgot = new();
+
+            if (_loginUser.DbConnection != null)
+            {
+                _loginUser.DbConnection.Close();
+            }
+
             this.Close();
             forgot.Show();
         }
         #endregion
+
+
+        private void WindowLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                FocusManager.SetFocusedElement(this, this);
+                ButtonLogin.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            }
+        }
     }
 }

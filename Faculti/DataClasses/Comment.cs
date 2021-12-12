@@ -103,7 +103,7 @@ namespace Faculti.DataClasses
             {
                 Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                 Author.Id = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
-                Text = reader.IsDBNull(2) ? null : reader.GetString(2);
+                Text = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
                 MentionedUser.Id = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
                 CreatedTime = reader.IsDBNull(4) ? DateTime.MinValue : reader.GetOracleDate(4).Value;
             }

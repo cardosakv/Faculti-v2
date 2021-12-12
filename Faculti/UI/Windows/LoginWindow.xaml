@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:gif="http://wpfanimatedgif.codeplex.com" 
         x:Name="WindowLogin" x:Class="Faculti.UI.Windows.LoginWindow"
         mc:Ignorable="d"
         Title="Faculti - Sign In" 
@@ -12,8 +13,7 @@
         WindowStartupLocation="CenterScreen"
         Height="650" 
         Width="530"
-        MouseDown="WindowLogin_MouseDown" 
-        Loaded="WindowLogin_Loaded">
+        MouseDown="WindowLogin_MouseDown" Loaded="WindowLogin_Loaded" KeyDown="WindowLogin_KeyDown">
 
     <Window.Resources>
         <Style x:Key="MinimizeButtonStyle" TargetType="{x:Type Button}">
@@ -97,10 +97,16 @@
         </StackPanel>
 
         <TextBlock HorizontalAlignment="Left" Margin="44,585,0,0" Grid.Row="1" TextWrapping="NoWrap" Text="© 2021 FACULTI. ALL RIGHTS RESERVED." VerticalAlignment="Top" FontFamily="{DynamicResource Montserrat}" Foreground="#FFE4E4E4" FontSize="7" FontWeight="Bold"/>
-        
+
         <StackPanel x:Name="Toolbar" MouseDown="Toolbar_MouseDown" Background="White" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
             <Button x:Name="Close" Style="{StaticResource CloseButtonStyle}" Content="╳" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Close_Click"/>
             <Button x:Name="Minimize" Style="{StaticResource MinimizeButtonStyle}" Content="—" Width="25" Height="25" FontSize="10" FontFamily="Century Gothic" Click="Minimize_Click"/>
+        </StackPanel>
+
+        <Image x:Name="Loader" gif:ImageBehavior.AnimatedSource="/Resources/Images/loader.gif" Visibility="Hidden" HorizontalAlignment="Center" Height="60" Margin="0,447,0,0" Grid.Row="1" VerticalAlignment="Top" Width="60" Source="/Resources/Images/loader.gif"/>
+        <StackPanel x:Name="ErrorMessage" Visibility="Hidden" Orientation="Horizontal" Margin="173,217,37,393" Grid.Row="1">
+            <TextBlock Text="🔸" Foreground="{StaticResource ErrorRegular}" FontSize="10" Height="16" Width="13" Margin="12,0,0,0"/>
+            <TextBlock Text="Credentials are not correct." FontFamily="{StaticResource Montserrat}" VerticalAlignment="Center" Margin="3,0,0,0" FontWeight="SemiBold" Foreground="{StaticResource ErrorRegular}" FontSize="10" />
         </StackPanel>
     </Grid>
 </Window>

@@ -134,6 +134,11 @@ namespace Faculti.UI.Windows
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            if (_forgotUser.DbConnection != null)
+            {
+                _forgotUser.DbConnection.Close();
+            }
+
             Environment.Exit(0);
         }
 
@@ -150,6 +155,12 @@ namespace Faculti.UI.Windows
         private void TextBlockLogin_Click(object sender, RoutedEventArgs e)
         {
             LoginWindow login = new();
+
+            if (_forgotUser.DbConnection != null)
+            {
+                _forgotUser.DbConnection.Close();
+            }
+
             this.Close();
             login.Show();
         }

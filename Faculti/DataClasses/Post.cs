@@ -116,9 +116,9 @@ namespace Faculti.DataClasses
             if (!reader.Read()) return;
             
             Id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
-            Type = reader.IsDBNull(1) ? null : reader.GetString(1);
+            Type = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
             Author.Id = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
-            Text = reader.IsDBNull(3) ? null : reader.GetString(3);
+            Text = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
             Class.Id = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
             MentionedUser.Id = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
             CreatedTime = reader.IsDBNull(6) ? DateTime.MinValue : reader.GetOracleDate(6).Value;

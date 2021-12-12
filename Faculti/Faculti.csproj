@@ -104,6 +104,7 @@
     <None Remove="Resources\Icons\classes-hover.png" />
     <None Remove="Resources\Icons\classes-idle.png" />
     <None Remove="Resources\Icons\classes-pressed.png" />
+    <None Remove="Resources\Icons\edit.png" />
     <None Remove="Resources\Icons\feed-hover.png" />
     <None Remove="Resources\Icons\feed-idle.png" />
     <None Remove="Resources\Icons\feed-pressed.png" />
@@ -118,6 +119,7 @@
     <None Remove="Resources\Icons\students-pressed.png" />
     <None Remove="Resources\Images\cheers.png" />
     <None Remove="Resources\Images\close.png" />
+    <None Remove="Resources\Images\default_classbg.jpg" />
     <None Remove="Resources\Images\default_profile.jpg" />
     <None Remove="Resources\Images\faculti-logo-black-50px.png" />
     <None Remove="Resources\Images\faculti-logo-black-small.png" />
@@ -130,6 +132,7 @@
     <None Remove="Resources\Images\new-notif-idle.png" />
     <None Remove="Resources\Images\no-notif-hover.png" />
     <None Remove="Resources\Images\no-notif-idle.png" />
+    <None Remove="Resources\Images\Ongoing.jpg" />
     <None Remove="Resources\Images\password-hide.png" />
     <None Remove="Resources\Images\password-show.png" />
     <None Remove="Resources\Images\password-success.png" />
@@ -138,6 +141,7 @@
     <None Remove="Resources\Images\settings-idle.png" />
     <None Remove="Resources\Images\splashscreen-bg.png" />
     <None Remove="Resources\Images\splashscreen-img.png" />
+    <None Remove="Resources\Images\UnderConstruction.gif" />
     <None Remove="UI\Windows\create-account-bg.png" />
   </ItemGroup>
 
@@ -285,6 +289,7 @@
     <Resource Include="Resources\Icons\classes-hover.png" />
     <Resource Include="Resources\Icons\classes-idle.png" />
     <Resource Include="Resources\Icons\classes-pressed.png" />
+    <Resource Include="Resources\Icons\edit.png" />
     <Resource Include="Resources\Icons\feed-hover.png" />
     <Resource Include="Resources\Icons\feed-idle.png" />
     <Resource Include="Resources\Icons\feed-pressed.png" />
@@ -307,6 +312,7 @@
     <Resource Include="Resources\Images\close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\default_classbg.jpg" />
     <Resource Include="Resources\Images\default_profile.jpg" />
     <Resource Include="Resources\Images\faculti-logo-black-50px.png" />
     <Resource Include="Resources\Images\faculti-logo-black-small.png" />
@@ -333,6 +339,7 @@
     <Resource Include="Resources\Images\no-notif-idle.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\Ongoing.jpg" />
     <Resource Include="Resources\Images\password-hide.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -360,6 +367,9 @@
     <Resource Include="Resources\Images\splashscreen-img.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\UnderConstruction.gif">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -373,6 +383,14 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\MultilineTextBox.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Update="UI\Controls\BaseTextbox2.xaml.cs">
       <SubType>Code</SubType>
@@ -402,9 +420,17 @@
     <None Update="App.config">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="UI\Controls\MultiLineTextBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="UI\Controls\BaseTextbox2.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

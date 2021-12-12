@@ -107,7 +107,7 @@ namespace Faculti.DataClasses
                 var userId1 = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
                 var userId2 = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
                 Contact.Id = userId1 == 0 ? userId2 : userId1;
-                LastMessage = reader.IsDBNull(3) ? null : reader.GetString(3);
+                LastMessage = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
                 LastUpdate = reader.IsDBNull(4) ? DateTime.MinValue : reader.GetOracleDate(4).Value;
                 LastUserId = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);            }
         }

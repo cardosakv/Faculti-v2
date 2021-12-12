@@ -151,7 +151,11 @@ namespace Faculti.UI.Windows
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            _signupUser.DbConnection.Close();
+            if (_signupUser.DbConnection != null)
+            {
+                _signupUser.DbConnection.Close();
+            }
+
             Environment.Exit(0);
         }
 
