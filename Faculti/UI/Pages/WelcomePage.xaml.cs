@@ -24,24 +24,56 @@ namespace Faculti.UI.Pages
     {
         public event DialogShown OnDialogShown = delegate { };
         public event DialogHidden OnDialogHide = delegate { };
+        public event AddingFinished OnFinished = delegate { };
 
-        private User _user;
-        private HomeWindow _homeWindow;
+        private readonly User _user;
 
         public WelcomePage(User user)
         {
             InitializeComponent();
             _user = user;
+            
+            if (_user.Type == UserType.Teacher)
+            {
+                Caption.Text = "Start creating your first class to continue.";
+            }
+            else
+            {
+                Caption.Text = "Start adding your student child to continue.";
+            }
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddClassWindow addClass = new(_user);
-            OnDialogShown();
-            addClass.ShowDialog();
-            if (addClass.DialogResult == true || addClass.DialogResult == false)
+            if (_user.Type == UserType.Teacher)
             {
-                OnDialogHide();
+                AddClassWindow addClass = new(_user);
+                OnDialogShown();
+                addClass.ShowDialog();
+                if (addClass.DialogResult == true)
+                {
+                    OnFinished();
+                    OnDialogHide();
+                }
+                else
+                {
+                    OnDialogHide();
+                }
+            }
+            else
+            {
+                AddChildWindow addChild = new(_user);
+                OnDialogShown();
+                addChild.ShowDialog();
+                if (addChild.DialogResult == true)
+                {
+                    OnFinished();
+                    OnDialogHide();
+                }
+                else
+                {
+                    OnDialogHide();
+                }
             }
         }
     }

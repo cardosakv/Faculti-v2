@@ -24,6 +24,7 @@
         <Brush x:Key="GrayDark">#98a3ab</Brush>
         <Brush x:Key="GrayRegular">#c4c9cf</Brush>
         <Brush x:Key="GrayMedium">#e9edf1</Brush>
+        <Brush x:Key="GrayMedium2">#dce1f0</Brush>
         <Brush x:Key="GrayLow">#f5f5f5</Brush>
         <Brush x:Key="GrayFaint">#eef2f5</Brush>
         <Brush x:Key="ErrorFaint">#ffe6e6</Brush>

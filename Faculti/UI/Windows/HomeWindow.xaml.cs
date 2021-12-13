@@ -21,15 +21,18 @@ namespace Faculti
 {
     public delegate void DialogShown();
     public delegate void DialogHidden();
+    public delegate void AddingFinished();
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class HomeWindow : Window
     {
+        private Class _currClass;
+        private Student _currStudent;
+        private WelcomePage _welcomePage;
         private readonly User _user;
-        private readonly WelcomePage welcome;
-        private readonly DispatcherTimer timer = new()
+        private readonly DispatcherTimer _timer = new()
         {
             Interval = TimeSpan.FromMilliseconds(1000),
             IsEnabled = true
@@ -39,23 +42,76 @@ namespace Faculti
         {
             InitializeComponent();
             DisplayTimeAndDate();
-            timer.Tick += Timer_Tick;
+            _timer.Tick += Timer_Tick;
 
             _user = user;
-            _user.RetrieveGeneralInfoAsync();
-
-            welcome = new(user);
-            welcome.OnDialogShown += new DialogShown(DecreaseOpacity);
-            welcome.OnDialogHide += new DialogHidden(DefaultOpacity);
-
-            RadioWelcome.IsChecked = true;
-            RadioFeed.Visibility = Visibility.Hidden;
-            RadioChat.Visibility = Visibility.Hidden;
-            RadioCalendar.Visibility = Visibility.Hidden;
-            RadioGrades.Visibility = Visibility.Hidden;
-            Frame.Content = welcome;
+            InitializeGetStarted();
         }
 
+        private void InitializeGetStarted()
+        {
+            RadioStudents.Visibility = Visibility.Hidden;
+
+            if (_user.IsFirstTime)
+            {
+                _welcomePage = new(_user);
+                _welcomePage.OnDialogShown += new DialogShown(DecreaseOpacity);
+                _welcomePage.OnDialogHide += new DialogHidden(DefaultOpacity);
+                _welcomePage.OnFinished += new AddingFinished(DisplayInfo);
+
+                RadioWelcome.IsChecked = true;
+                RadioWelcome.Visibility = Visibility.Visible;
+                RadioFeed.Visibility = Visibility.Hidden;
+                RadioChat.Visibility = Visibility.Hidden;
+                RadioGrades.Visibility = Visibility.Hidden;
+                Menu.Visibility = Visibility.Hidden;
+                Frame.Content = _welcomePage;
+            }
+            else
+            {
+                DisplayInfo();
+            }
+        }
+
+        private void DisplayInfo()
+        {
+            RadioWelcome.Visibility = Visibility.Collapsed;
+            DisplayFeed();
+            DisplayChat();
+            DisplayMenu();
+            DisplayGrades();
+
+            if (_user.Type == UserType.Teacher)
+            {
+                DisplayStudents();
+            }
+        }
+
+        private void DisplayMenu()
+        {
+            Menu.Visibility = Visibility.Visible;
+        }
+
+        private void DisplayFeed()
+        {
+            RadioFeed.Visibility = Visibility.Visible;
+            RadioFeed.IsChecked = true;
+        }
+
+        private void DisplayChat()
+        {
+            RadioChat.Visibility = Visibility.Visible;
+        }
+
+        private void DisplayGrades()
+        {
+            RadioGrades.Visibility = Visibility.Visible;
+        }
+
+        private void DisplayStudents()
+        {
+            RadioStudents.Visibility = Visibility.Visible;
+        }
 
         #region UI
         private void DecreaseOpacity()
@@ -117,6 +173,16 @@ namespace Faculti
         private void Grid_MouseDown_4(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void FontAwesome_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Frame.CanGoBack) Frame.GoBack();
+        }
+
+        private void FontAwesome_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            if (Frame.CanGoForward) Frame.GoForward();
         }
         #endregion
     }

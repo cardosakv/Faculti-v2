@@ -51,6 +51,7 @@ namespace Faculti.UI.Windows
             ButtonCreate.Visibility = Visibility.Visible;
             Loader.Visibility = Visibility.Hidden;
 
+            _user.RemoveFirstTime();
             await Task.Delay(1000);
             DialogResult = true;
             Close();

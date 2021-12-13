@@ -134,7 +134,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource GrayMedium}" />
+                                <Setter Property="Background" Value="{StaticResource GrayMedium2}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -145,7 +145,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
@@ -164,14 +164,14 @@
                                 Width="30"  
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"
-                                Margin="5,0,0,2"/>
+                                Margin="5,0,0,2" MouseDown="FontAwesome_MouseDown"/>
                 <fa:FontAwesome Icon="AngleRight"
                                 Style="{StaticResource NavKeys}"
                                 FontSize="20"
                                 Width="30"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"
-                                Margin="0,0,0,2"/>
+                                Margin="0,0,0,2" MouseDown="FontAwesome_MouseDown_1"/>
             </StackPanel>
         </Grid>
 
@@ -306,7 +306,7 @@
         </Grid>
 
         <!-- Tabs buttons -->
-        <Grid Grid.Row="1" Grid.Column="0" Background="{StaticResource GrayFaint}">
+        <Grid Grid.Row="1" Grid.Column="0" Background="{StaticResource GrayLow}">
             <StackPanel>
                 <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioWelcome" Margin="10,10,10,0" IsChecked="True">
                     <RadioButton.Content>
@@ -351,7 +351,7 @@
                 </RadioButton>
 
 
-                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioFeed">
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioFeed" Margin="10,10,10,0">
                     <RadioButton.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image>
@@ -368,15 +368,6 @@
                                             <DataTrigger Binding="{Binding ElementName=RadioFeed,Path=IsChecked}" Value="True">
                                                 <Setter Property="Source" Value="/Resources/Icons/feed-pressed.png"/>
                                             </DataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ElementName=RadioFeed,Path=IsChecked}" Value="False"/>
-                                                    <Condition Binding="{Binding ElementName=RadioFeed,Path=IsMouseOver}" Value="True"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="Source" Value="/Resources/Icons/feed-hover.png"/>
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Image.Style>
@@ -530,7 +521,7 @@
                     </RadioButton.Content>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioCalendar">
+                <!--<RadioButton Style="{StaticResource TabsButton}" x:Name="RadioCalendar">
                     <RadioButton.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image>
@@ -570,7 +561,7 @@
                             </TextBlock>
                         </StackPanel>
                     </RadioButton.Content>
-                </RadioButton>
+                </RadioButton>-->
 
                 <!--<RadioButton Style="{StaticResource TabsButton}" x:Name="RadioAss">
                     <RadioButton.Content>
@@ -614,7 +605,7 @@
                     </RadioButton.Content>
                 </RadioButton>-->
 
-                <!--<RadioButton Style="{StaticResource TabsButton}" x:Name="RadioStudents">
+                <RadioButton Style="{StaticResource TabsButton}" x:Name="RadioStudents">
                     <RadioButton.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image>
@@ -654,8 +645,64 @@
                             </TextBlock>
                         </StackPanel>
                     </RadioButton.Content>
-                </RadioButton>-->
+                </RadioButton>
             </StackPanel>
+
+            <RadioButton Style="{StaticResource TabsButton}" x:Name="Menu" VerticalAlignment="Bottom" Margin="10,0,10,10">
+                <RadioButton.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse>
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Setter Property="Stroke" Value="Transparent"/>
+                                    <Setter Property="Height" Value="30"/>
+                                    <Setter Property="Width" Value="30"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </Ellipse.Style>
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="ClassChildPicture" ImageSource="/Resources/Images/default_classbg.jpg"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Text="CPE331" x:Name="ClassChildName">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                                    <Setter Property="Margin" Value="10,0,0,0"/>
+                                    <Setter Property="Width" Value="100"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                    <Setter Property="FontWeight" Value="Medium"/>
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Foreground" Value="{StaticResource BlueFaint}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=RadioStudents,Path=IsMouseDown}" Value="True">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="•••">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="5,0,0,0"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+                                    <Setter Property="FontWeight" Value="Medium"/>
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="Foreground" Value="{StaticResource BlueGray}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=RadioStudents,Path=IsMouseDown}" Value="True">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                </RadioButton.Content>
+            </RadioButton>
         </Grid>
         
         <Frame x:Name="Frame"

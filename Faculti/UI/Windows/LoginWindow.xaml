@@ -79,8 +79,8 @@
             <TextBlock Text="SIGN IN" FontFamily="{StaticResource Montserrat}" FontStyle="Normal" FontWeight="UltraBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0" FontSize="22" Foreground="{DynamicResource BlueDark}"/>
 
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <RadioButton x:Name="ButtonParent" Style="{StaticResource BaseRadioButton}" IsChecked="True" Padding="0,4,0,0" Content="PARENT" Height="45" Width="90" Margin="10, 35, 10, 3" FontSize="11"/>
-                <RadioButton x:Name="ButtonTeacher" Style="{StaticResource BaseRadioButton}" Padding="0,4,0,0" Content="TEACHER" Height="45" Width="90" Margin="10, 35, 10, 3" FontSize="11"/>
+                <RadioButton x:Name="ButtonParent" Style="{StaticResource BaseRadioButton}" IsChecked="True" Padding="0,4,0,0" Content="PARENT" Height="45" Width="90" Margin="10, 35, 10, 3" FontSize="11" Checked="ButtonParent_Checked"/>
+                <RadioButton x:Name="ButtonTeacher" Style="{StaticResource BaseRadioButton}" Padding="0,4,0,0" Content="TEACHER" Height="45" Width="90" Margin="10, 35, 10, 3" FontSize="11" Checked="ButtonTeacher_Checked"/>
             </StackPanel>
 
             <Controls:BaseTextBox x:Name="TextBoxEmail" ValidationType="Email" ErrorText="Invalid email format." Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Title="EMAIL" Margin="0,30,0,0"/>

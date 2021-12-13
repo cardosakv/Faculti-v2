@@ -152,6 +152,8 @@ namespace Faculti.DataClasses
 
         public DateTime LastPicChange { get; set; }
 
+        public bool IsFirstTime { get; set; }
+
         private IDbConnection _dbConnection;
         public IDbConnection DbConnection
         {
@@ -256,7 +258,7 @@ namespace Faculti.DataClasses
             string toCheckField = string.IsNullOrEmpty(Email) ? "PHONE_NUMBER_IN_HASH" : "EMAIL";
             string toCheckValue = PhoneNumberInHash ?? Email;
 
-            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}'";
+            var cmdText = $@"SELECT COUNT(*) FROM USERS WHERE {toCheckField} = '{toCheckValue}' AND PASSWORD_IN_HASH = '{PasswordInHash}' AND USER_TYPE = '{Type}'";
             using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
 
             var records = 0;
@@ -278,16 +280,16 @@ namespace Faculti.DataClasses
         /// <summary>
         /// Gets all information of the user from the database given the credentials.
         /// </summary>
-        public async void RetrieveGeneralInfoAsync()
+        public async Task RetrieveGeneralInfoAsync()
         {
-            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS_TYPE, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
+            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS_TYPE, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE, IS_FIRST_TIME FROM USERS WHERE EMAIL = '{Email}'";
             await Task.Run(() =>
             {
                 try
                 {
                     ReadData(cmdText, DbConnection);
                 }
-                    catch (Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Database connection error.\n" + ex);
                 }
@@ -297,9 +299,9 @@ namespace Faculti.DataClasses
         /// <summary>
         /// Gets all information of the user from the database using the Id.
         /// </summary>
-        public async void RetrieveGeneralInfoAsync(int userId, IDbConnection connection)
+        public async Task RetrieveGeneralInfoAsync(int userId, IDbConnection connection)
         {
-            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS_TYPE, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE FROM USERS WHERE USER_ID = {userId}";
+            var cmdText = $@"SELECT USER_ID, USER_TYPE, FIRST_NAME, LAST_NAME, PHONE_NUMBER_IN_HASH, EMAIL, PASSWORD_IN_HASH, STATUS_TYPE, PICTURE, LAST_PIC_CHANGE, LAST_ONLINE, IS_FIRST_TIME FROM USERS WHERE USER_ID = {userId}";
             await Task.Run(() => ReadData(cmdText, connection));
         }
 
@@ -309,6 +311,26 @@ namespace Faculti.DataClasses
         private async void SetStatusAsync(Status status)
         {
             var cmdText = $"UPDATE USERS SET STATUS_TYPE = '{status}' WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+            await Task.Run(() =>
+            {
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Sets the first time status of the user.
+        /// </summary>
+        public async void RemoveFirstTime()
+        {
+            var cmdText = $"UPDATE USERS SET IS_FIRST_TIME = 'N' WHERE EMAIL = '{Email}' OR PHONE_NUMBER_IN_HASH = '{PhoneNumberInHash}'";
             using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
             await Task.Run(() =>
             {
@@ -343,6 +365,7 @@ namespace Faculti.DataClasses
                     Status = reader.IsDBNull(7) ? Status.Invisible : (Status)Enum.Parse(typeof(Status), reader.GetString(7));
                     LastPicChange = reader.IsDBNull(9) ? DateTime.MinValue : reader.GetOracleDate(9).Value;
                     LastOnline = reader.IsDBNull(10) ? DateTime.MinValue : reader.GetOracleDate(10).Value;
+                    IsFirstTime = reader.IsDBNull(11);
 
                     byte[] image = reader.IsDBNull(8) ? null : (byte[])reader["PICTURE"];
                     if (image == null)

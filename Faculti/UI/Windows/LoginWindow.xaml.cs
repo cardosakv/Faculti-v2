@@ -53,7 +53,18 @@ namespace Faculti.UI.Windows
                     RemoveCredentials();
                 }
 
-                HomeWindow home = new(_loginUser);
+                await _loginUser.RetrieveGeneralInfoAsync();
+                HomeWindow home;
+
+                if (_loginUser.Type == UserType.Parent)
+                {
+                    home = new(_loginUser);
+                }
+                else
+                {
+                    home = new(_loginUser);
+                }
+
                 this.Close();
                 home.Show();
             }
@@ -75,6 +86,16 @@ namespace Faculti.UI.Windows
         {
             Properties.Settings.Default.Email = string.Empty;
             Properties.Settings.Default.Password = string.Empty;
+        }
+
+        private void ButtonParent_Checked(object sender, RoutedEventArgs e)
+        {
+            _loginUser.Type = UserType.Parent;
+        }
+
+        private void ButtonTeacher_Checked(object sender, RoutedEventArgs e)
+        {
+            _loginUser.Type = UserType.Teacher;
         }
 
         private async void WindowLogin_Loaded(object sender, RoutedEventArgs e)
@@ -146,8 +167,6 @@ namespace Faculti.UI.Windows
             this.Close();
             forgot.Show();
         }
-        #endregion
-
 
         private void WindowLogin_KeyDown(object sender, KeyEventArgs e)
         {
@@ -157,5 +176,6 @@ namespace Faculti.UI.Windows
                 ButtonLogin.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             }
         }
+        #endregion
     }
 }

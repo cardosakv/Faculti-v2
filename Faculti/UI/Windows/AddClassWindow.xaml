@@ -14,8 +14,8 @@
         Background="Transparent"
         mc:Ignorable="d"
         Title="AddClassWindow" 
-        Height="487" 
-        Width="395"
+        Height="470" 
+        Width="380"
         Focusable="True" MouseDown="Window_MouseDown">
 
     <Border BorderBrush="White"
@@ -28,7 +28,7 @@
             <Rectangle x:Name="PictureCon"
                        HorizontalAlignment="Center" 
                        Height="100" 
-                       Margin="0,40,0,0" 
+                       Margin="0,34,0,0" 
                        VerticalAlignment="Top" 
                        Width="100"
                        Stroke="Transparent"
@@ -59,34 +59,34 @@
 
             <Controls:BaseTextBox x:Name="TextboxClassName"
                               HorizontalAlignment="Center" 
-                              Margin="0,172,0,0" 
+                              Margin="0,166,0,0" 
                               VerticalAlignment="Top"
-                              Title="DISPLAY NAME *"
+                              Title="CLASS NAME *"
                               Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                               ValidationType="Required"
                               ErrorText="This is required."/>
 
             <Controls:MultiLineTextBox HorizontalAlignment="Center" 
-                                   Margin="0,259,0,0" 
+                                   Margin="0,251,0,0" 
                                    VerticalAlignment="Top"
                                    Title="DESCRIPTION"
                                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            
+
             <Button x:Name="ButtonCreate" 
                     Style="{StaticResource OKButton}" 
                     Content="CREATE"
-                    Margin="278,402,37,35" 
+                    Margin="269,391,31,29" 
                     Click="ButtonCreate_Click"/>
-            
+
             <Button x:Name="ButtonCancel" 
                     Style="{StaticResource CancelButton}" 
-                    Margin="181,402,134,35"
+                    Margin="167,391,132,29"
                     IsCancel="True"/>
-            
+
             <Image x:Name="Edit"
                    HorizontalAlignment="Center" 
                    Height="32" 
-                   Margin="0,74,0,0" 
+                   Margin="0,68,0,0" 
                    VerticalAlignment="Top" 
                    Width="34" 
                    Cursor="Hand"
@@ -113,7 +113,7 @@
                    Visibility="Hidden" 
                    HorizontalAlignment="Left" 
                    Height="60" 
-                   Margin="288,399,0,0" 
+                   Margin="279,386,0,0" 
                    VerticalAlignment="Top" 
                    Width="60" 
                    Source="/Resources/Images/loader.gif"/>

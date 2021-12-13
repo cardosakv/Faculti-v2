@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Faculti.DataClasses
 {
@@ -103,6 +104,48 @@ namespace Faculti.DataClasses
         }
 
         /// <summary>
+        /// Check the code of the student if available in the database.
+        /// </summary>
+        public async Task<bool> CheckCode(IDbConnection DbConnection)
+        {
+            var cmdText = $"SELECT COUNT(*) FROM STUDENTS WHERE STUDENT_CODE = '{Code}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, DbConnection);
+
+            var records = 0;
+            await Task.Run(() =>
+            {
+                try
+                {
+                    records = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
+
+            return records > 0;
+        }
+
+        public async Task UpdateParent(int parentId, IDbConnection connection)
+        {
+            var cmdText = $"UPDATE STUDENTS SET PARENT_ID = {parentId} WHERE STUDENT_CODE = '{Code}'";
+            using IDbCommand command = Database.CreateCommand(cmdText, connection);
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Database connection error.\n" + ex);
+                }
+            });
+        }
+
+        /// <summary>
         /// Gets the full class information of the student.
         /// </summary>
         public void RetrieveClassInfo(IDbConnection connection)
@@ -113,15 +156,15 @@ namespace Faculti.DataClasses
         /// <summary>
         /// Gets the parent general information of the student.
         /// </summary>
-        public void RetrieveParentInfo(IDbConnection connection)
+        public async Task RetrieveParentInfo(IDbConnection connection)
         {
-            Parent.RetrieveGeneralInfoAsync(Parent.Id, connection);
+            await Parent.RetrieveGeneralInfoAsync(Parent.Id, connection);
         }
 
         /// <summary>
         /// Gets student information using its student code.
         /// </summary>
-        public async void RetrieveInfoAsync(string studentCode, IDbConnection connection)
+        public async Task RetrieveInfoAsync(string studentCode, IDbConnection connection)
         {
             var cmdText = $@"SELECT STUDENT_ID, STUDENT_CODE, FIRST_NAME, LAST_NAME, AGE, SEX, CLASS_ID, PARENT_ID, LAST_PIC_CHANGE, PICTURE FROM STUDENTS WHERE STUDENT_CODE = '{studentCode}'";
             await Task.Run(() => ReadData(cmdText, connection));
@@ -130,7 +173,7 @@ namespace Faculti.DataClasses
         /// <summary>
         /// Gets student information using its parent ID.
         /// </summary>
-        public async void RetrieveInfoAsync(int parentId, IDbConnection connection)
+        public async Task RetrieveInfoAsync(int parentId, IDbConnection connection)
         {
             var cmdText = $@"SELECT STUDENT_ID, STUDENT_CODE, FIRST_NAME, LAST_NAME, AGE, SEX, CLASS_ID, PARENT_ID, LAST_PIC_CHANGE, PICTURE FROM STUDENTS WHERE PARENT_ID = {parentId}";
             await Task.Run(() => ReadData(cmdText, connection));

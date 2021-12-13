@@ -1,0 +1,157 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com" 
+         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:Faculti.UI.Windows"
+        xmlns:Controls="clr-namespace:Faculti.UI.Controls" x:Class="Faculti.UI.Windows.AddChildWindow"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        mc:Ignorable="d"
+        Title="AddClassWindow" 
+        Height="373" 
+        Width="380"
+        Focusable="True" MouseDown="Window_MouseDown">
+
+    <Border BorderBrush="White"
+            Background="White"
+            BorderThickness="0"
+            CornerRadius="10">
+
+        <Grid Background="Transparent">
+
+            <Controls:BaseTextBox x:Name="TextboxStudentCode"
+                              HorizontalAlignment="Center" 
+                              Margin="0,92,0,0" 
+                              VerticalAlignment="Top"
+                              Title="STUDENT CODE *"
+                              Text="{Binding Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                              ValidationType="Required"
+                              ErrorText="This is required."/>
+
+
+            <Image x:Name="Loader" 
+                   gif:ImageBehavior.AnimatedSource="/Resources/Images/loader.gif" 
+                   Visibility="Hidden" 
+                   HorizontalAlignment="Left" 
+                   Height="60" 
+                   Margin="279,174,0,0" 
+                   VerticalAlignment="Top" 
+                   Width="60" 
+                   Source="/Resources/Images/loader.gif"/>
+
+            <Label Content="ACCESS STUDENT" 
+                   FontFamily="{StaticResource Montserrat}"
+                   FontWeight="Bold"
+                   Foreground="{StaticResource BlueFaint}"
+                   HorizontalAlignment="Center" 
+                   Margin="0,18,0,0"
+                   VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Center" 
+                Margin="0,50,0,0" 
+                TextWrapping="NoWrap" 
+                Text="Enter the student code of your child provided by the teacher." 
+                VerticalAlignment="Top" 
+                FontFamily="{StaticResource SourceSansPro}" 
+                Foreground="{DynamicResource GrayRegular}" 
+                FontWeight="Regular" 
+                Width="300" 
+                FontSize="12"/>
+            <Button x:Name="ButtonAccess" 
+                    IsEnabled="False"
+                    Opacity="0.5"
+                    Style="{StaticResource OKButton}" 
+                    Content="ACCESS"
+                    Margin="269,290,31,25" 
+                    Click="ButtonAccess_Click"/>
+            <Button x:Name="ButtonCancel" 
+                Style="{StaticResource CancelButton}" 
+                Margin="167,288,132,27"
+                IsCancel="True"/>
+
+            <Button x:Name="ButtonSearch" 
+                Style="{StaticResource OKButton}" 
+                Width="39"
+                Height="39"
+                Margin="302,99,38,235" 
+                Click="ButtoSearch_Click">
+                <Button.Content>
+                    <fa:FontAwesome Icon="Search" FontWeight="Thin" FontSize="15" Margin="0,1,0,0"/>
+                </Button.Content>
+            </Button>
+            <Rectangle x:Name="PictureStudent"
+                HorizontalAlignment="Left" 
+                Height="60" 
+                Margin="32,205,0,0" 
+                VerticalAlignment="Top" 
+                Width="60"
+                Stroke="Transparent"
+                Cursor="Hand"
+                ToolTip="Change Picture">
+                <Rectangle.Fill>
+                    <ImageBrush x:Name="Pic" ImageSource="/Resources/Images/default_profile.jpg"/>
+                </Rectangle.Fill>
+                <Rectangle.Style>
+                    <Style TargetType="{x:Type Rectangle}">
+                        <Setter Property="RadiusX" Value="50"/>
+                        <Setter Property="RadiusY" Value="50"/>
+                    </Style>
+                </Rectangle.Style>
+            </Rectangle>
+            <Label Content="RESULT" 
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource GrayRegular}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center" Margin="33,0,0,0"/>
+            <Label Content="Name:" 
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource GrayDark}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="109,199,0,0"/>
+            <Label Content="-" 
+                   x:Name="StudentName"
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource GrayRegular}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="164,199,0,0"/>
+            <Label Content="Class:" 
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource GrayDark}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="109,221,0,0"/>
+            <Label Content="-" 
+                   x:Name="StudentClass"
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource GrayRegular}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="164,221,0,0"/>
+            <Label Content="ID NO:" 
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource GrayDark}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="109,244,0,0"/>
+            <Label Content="-" 
+                   x:Name="StudentId"
+                FontFamily="{StaticResource Montserrat}"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource GrayRegular}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="164,244,0,0" Width="149"/>
+
+        </Grid>
+
+    </Border>
+
+</Window>
