@@ -8,6 +8,3 @@ Faculti is a .NET 5.0 (C#) application for Windows that enables parents monitor 
 4. Rheaynne Ray Eduyan
 5. Richan Patalinghug
 6. Stefan James Tudtud
-
-##
-*This project is unfunished and abandoned.*
